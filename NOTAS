@@ -3,3 +3,8 @@ Este archivo es para ir poniendo notas:
 _Importante que no trbajemos con el mismo archivo que si no no se va a guardar "Creo"
 -Mirar Camel Case para saber que si al definir funciones es maayúscula o minúscula
 -Todos los atributos publicos tiene que estar protegidos.
+_Tablero:
+    Bloques - Lista de muchos bloque - Bloque - Clase
+    Enemigo - Lista de enemigos
+    Mario - Clase
+    Montañas - Lista de montaña - Montaña - Clase

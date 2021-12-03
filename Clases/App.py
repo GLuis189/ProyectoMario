@@ -18,6 +18,7 @@ class App():
 
     def draw(self):
         pyxel.cls(6)
+        Nv.draw
 
 
 App()

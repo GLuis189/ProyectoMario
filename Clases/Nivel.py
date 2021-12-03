@@ -17,7 +17,7 @@ class Nivel():
 
         return items
 
-    def draw(self):
+    def drax(self):
         for item in self.__suelo:
             Bloques.Bloque_Suelo(10, 10)
 

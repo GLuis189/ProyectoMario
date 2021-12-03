@@ -15,7 +15,7 @@ class Bloque_Rompibles(Bloque):
 
 
 class Bloque_Suelo(Bloque):
-    def __init__(self, posicion_x, posicion_y):
+    def __init__(self, posicion_x = 0, posicion_y = 20):
         super().__init__(posicion_x, posicion_y)
 
     def draw(self):

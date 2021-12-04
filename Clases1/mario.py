@@ -56,7 +56,6 @@ class Mario():
 
     def colisionar(self):
 
-        # self.__y -= 16
         self.__vy = 0
 
     def draw(self):

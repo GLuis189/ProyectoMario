@@ -2,12 +2,7 @@ import pyxel
 
 from Clases1.bloque import Bloque
 from Clases1.mario import Mario
-# Hay que ver como va lo de las herencias
-# class Suelo(Bloque):
-#   pass
-
-class Enemigos():
-    pass
+from Clases1.enemigos import Goomba
 
 
 class Poderes():
@@ -20,6 +15,7 @@ class App():
         pyxel.load("mario_assets.pyxres")
         self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
         self.Mario = Mario()
+        self.goomba = Goomba(x=30, y=30)
 
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
@@ -28,8 +24,7 @@ class App():
     def __crear_suelo(self, num_suelo):
         bloques = []
         for i in range(num_suelo):
-            bloques.append(Bloque(16 * i,
-                                  128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+            bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
 
     # Luego crearemos update y draw
@@ -39,6 +34,8 @@ class App():
         for item in self.Suelo:
             item.update(self.Mario)
 
+        self.goomba.update()  #Hay que hacer los setter para poder modificar la posicion del goomba
+
     def draw(self):
         pyxel.cls(6)
 
@@ -47,6 +44,8 @@ class App():
         # Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
+
+        pyxel.blt(self.goomba.x, self.goomba.y, 1, 0, 0, self.goomba.w, self.goomba.h, 12)
 
 
 App()

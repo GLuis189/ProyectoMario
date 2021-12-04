@@ -116,7 +116,7 @@ class App():
         self.Mario.update()
 
         for item in self.Suelo:
-            item.update()
+            item.update(self.Mario)
 
     def draw(self):
         pyxel.cls(6)

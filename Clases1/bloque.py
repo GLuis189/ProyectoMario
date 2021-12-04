@@ -1,5 +1,5 @@
 import pyxel
-from mario import Mario
+from Clases1.mario import Mario
 
 class Bloque():
     def __init__(self, x, y):

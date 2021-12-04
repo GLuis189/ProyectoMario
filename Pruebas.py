@@ -1,13 +1,17 @@
 import pyxel
 
 
-class Bloque():
-    def __init__(self, x, y):
-        self.__x = x
-        self.__y = y
-        self.__w = 16
-        self.__h = 16
-        self.__activo = True
+
+
+
+# Hay que ver como va lo de las herencias
+#class Suelo(Bloque):
+#   pass
+
+
+class Mario():
+    def __init__(self):
+       self.__reset()
 
     @property
     def x(self):
@@ -16,28 +20,6 @@ class Bloque():
     @property
     def y(self):
         return self.__y
-
-    @property
-    def w(self):
-        return self.__w
-
-    @property
-    def h(self):
-        return self.__h
-
-    # No tiene mucho sentido este draw asiq si eso lo borramos luego
-    def draw(self):
-        pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
-
-
-# Hay que ver como va lo de las herencias
-class Suelo(Bloque):
-    pass
-
-
-class Mario():
-    def __init__(self):
-       self.__reset()
 
     def __reset(self):
         self.__x = 0
@@ -61,8 +43,47 @@ class Mario():
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
             self.__x = self.__x if 128//2 == self.__x - self.__w else max(0, self.__x + 2)
 
+        self.__y -= self.__vy
+
+
+    def colisionar(self):
+        self.__vy = 0
+
     def draw(self):
         pyxel.blt(self.__x, self.__y, 0, 2, 98, self.__w, self.__h, 12)
+
+class Bloque():
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+        self.__w = 16
+        self.__h = 16
+        self.__is_activo = True
+
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    # No tiene mucho sentido este draw asiq si eso lo borramos luego
+    def draw(self):
+        pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
+
+    def update(self, mario: Mario):
+        if self.__is_activo:
+            if mario.x >= self.__x and mario.x <= self.__x and mario.y >= self.__y and mario.y <= self.__y:
+                mario.colisionar()
 
 
 class Enemigos():
@@ -94,6 +115,9 @@ class App():
     def update(self):
         self.Mario.update()
 
+        for item in self.Suelo:
+            item.update()
+
     def draw(self):
         pyxel.cls(6)
 
@@ -101,6 +125,6 @@ class App():
 
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
-            pyxel.blt(item.x, item.y, 0, 0, 62, item.w, item.h, 12)
+            pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
 
 App()

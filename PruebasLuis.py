@@ -1,9 +1,6 @@
 import pyxel
 
 
-
-
-
 # Hay que ver como va lo de las herencias
 #class Suelo(Bloque):
 #   pass
@@ -20,6 +17,18 @@ class Mario():
     @property
     def y(self):
         return self.__y
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    @property
+    def vy(self):
+        return self.__vy
 
     def __reset(self):
         self.__x = 0
@@ -43,7 +52,14 @@ class Mario():
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
             self.__x = self.__x if 128//2 == self.__x - self.__w else max(0, self.__x + 2)
 
+        if pyxel.btn(pyxel.KEY_W) or pyxel.btn(pyxel.KEY_UP):
+            self.__y = max(0, self.__y - 2)
+
+        if pyxel.btn(pyxel.KEY_S) or pyxel.btn(pyxel.KEY_DOWN):
+            self.__y = max(0, self.__y + 2)
+
         self.__y -= self.__vy
+
 
 
     def colisionar(self):
@@ -82,8 +98,12 @@ class Bloque():
 
     def update(self, mario: Mario):
         if self.__is_activo:
-            if mario.x >= self.__x and mario.x <= self.__x and mario.y >= self.__y and mario.y <= self.__y:
+            if (mario.x < self.__x
+                    and mario.x > self.__x
+                    and mario.y < self.__y
+                    and mario.y  > self.__y and mario.vy < 0):
                 mario.colisionar()
+
 
 
 class Enemigos():
@@ -116,7 +136,7 @@ class App():
         self.Mario.update()
 
         for item in self.Suelo:
-            item.update()
+            item.update(self.Mario)
 
     def draw(self):
         pyxel.cls(6)

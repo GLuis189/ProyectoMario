@@ -7,7 +7,16 @@ import pyxel
 # Hay que ver como va lo de las herencias
 #class Suelo(Bloque):
 #   pass
+class Fondo():
+    def __init__(self):
+        self.fondo_u = 0  # se llaman fondo_u y fondo_v porque en la funcion bltm pide valores de u y de v
+        self.fondo_v = 0
 
+        # pass
+
+    def update(self, u, v):
+        self.fondo_u = u
+        self.fondo_v = v
 
 class Mario():
     def __init__(self):
@@ -47,7 +56,11 @@ class Mario():
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
         # Con self.__x if 128//2 == self.__x - self.__w hago que no se mueva si esta en la mitad
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
-            self.__x = self.__x if 128//2 == self.__x - self.__w else max(0, self.__x + 2)
+
+
+
+            self.__x = self.__x if 192//2 == self.__x - self.__w else max(0, self.__x + 2)
+
             self.__vx += 1
         else:
             self.__vx = 0
@@ -130,6 +143,9 @@ class App():
         pyxel.load("mario_assets.pyxres")
         self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
         self.Mario = Mario()
+        self.fondo = Fondo()  # llamamos a la clase fondo
+        self.fondo.fondo_u = 0
+        self.fondo.fondo_v = 64
 
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
@@ -147,6 +163,12 @@ class App():
 
         for item in self.Suelo:
             item.update(self.Mario)
+
+        while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
+
+            self.fondo.update(self.fondo.fondo_u + 0.5, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
+            break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
+
     def draw(self):
         pyxel.cls(6)
 
@@ -155,5 +177,5 @@ class App():
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
-
+        pyxel.blt(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 192, 128, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

@@ -174,7 +174,7 @@ class App():
         while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
 
             self.fondo.update(self.fondo.fondo_u + 0.5, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
-            break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
+            break # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):
         pyxel.cls(6)

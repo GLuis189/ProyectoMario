@@ -36,10 +36,10 @@ class Mario():
 
     def __reset(self):
         self.__x = 20
-        self.__y = 40
+        self.__y = 64
         self.__w = 14
         self.__h = 16
-        self.__vy = -1
+        self.__vy = 0
         self.__vx = 0
         self.__is_alive = True
         self.__Super_Mario = False
@@ -66,21 +66,27 @@ class Mario():
             self.__vx = 0
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
-            if self.__y >= 64:
-                self.__vy = 1
-                self.__y -= self.__vy * 6  # la velocidad a la que salta
+            self.__vy = 1
 
+            self.__y -= self.__vy * 5  # la velocidad a la que salta
 
-
-        if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
-            self.__y = self.__y
         else:
-            self.__y -= self.__vy
+            self.__vy = 0
+        #if self.__y > 64:
+         #   self.__vy = 1
+          #  self.__y -= self.__vy * 2  # la velocidad a la que salta
+
+
+
+        #if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
+            #self.__y = self.__y
+        #else:
+        self.__y += self.__vy + 1
 
 
     def colisionar(self):
 
-        #self.__y -= 16
+        self.__y -= 20
         self.__vy = 0
 
 
@@ -88,8 +94,8 @@ class Mario():
         pyxel.blt(self.__x,
                   self.__y,
                   0,
-                  2 if self.__vx == 0 else 18 or 1 if self.__vy > 0 else 2,
-                  79 if self.__vy > 0 else 98,
+                  18 if self.__vx != 0 else 2,
+                  79 if self.__vy >= 1 else 98,
                   self.__w if self.__vx >= 0 else self.__w * -1,
                   self.__h,
                   12)
@@ -144,8 +150,9 @@ class App():
         self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
         self.Mario = Mario()
         self.fondo = Fondo()  # llamamos a la clase fondo
-        self.fondo.fondo_u = 0
-        self.fondo.fondo_v = 64
+
+        self.fondo.fondo_u = 2
+        self.fondo.fondo_v = 4
 
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
@@ -177,5 +184,5 @@ class App():
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
-        pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 192, 128, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
+        pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

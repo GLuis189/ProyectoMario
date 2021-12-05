@@ -1,4 +1,14 @@
 import pyxel
+
+
+
+
+
+# Hay que ver como va lo de las herencias
+#class Suelo(Bloque):
+#   pass
+
+
 class Mario():
     def __init__(self):
        self.__reset()
@@ -11,13 +21,9 @@ class Mario():
     def y(self):
         return self.__y
 
-    @property
-    def vy(self):
-        return self.__vy
-
     def __reset(self):
         self.__x = 0
-        self.__y = 30
+        self.__y = 80
         self.__w = 14
         self.__h = 16
         self.__vy = -1
@@ -40,13 +46,12 @@ class Mario():
         self.__y -= self.__vy
 
 
-    def colisionar(self, bloque: Bloque):
-        self.__y -= bloque.y + bloque.h
+    def colisionar(self):
         self.__vy = 0
-
 
     def draw(self):
         pyxel.blt(self.__x, self.__y, 0, 2, 98, self.__w, self.__h, 12)
+
 class Bloque():
     def __init__(self, x, y):
         self.__x = x
@@ -77,13 +82,8 @@ class Bloque():
 
     def update(self, mario: Mario):
         if self.__is_activo:
-            if mario.y == self.__y:
+            if mario.x >= self.__x and mario.x <= self.__x and mario.y >= self.__y and mario.y <= self.__y:
                 mario.colisionar()
-
-
-# Hay que ver como va lo de las herencias
-#class Suelo(Bloque):
-#   pass
 
 
 class Enemigos():
@@ -98,7 +98,7 @@ class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
-        self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
+        self.Suelo = self.__crear_suelo(12) # Con esta función creas el suelo
         self.Mario = Mario()
 
         pyxel.playm(0, loop=True)
@@ -108,7 +108,7 @@ class App():
     def __crear_suelo(self, num_suelo):
         bloques = []
         for i in range(num_suelo):
-            bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+            bloques.append(Bloque(16 * i, 128 - 16)) # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
 
 #Luego crearemos update y draw
@@ -117,6 +117,7 @@ class App():
 
         for item in self.Suelo:
             item.update(self.Mario)
+
     def draw(self):
         pyxel.cls(6)
 

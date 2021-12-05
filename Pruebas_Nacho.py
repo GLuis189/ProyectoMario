@@ -177,5 +177,5 @@ class App():
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
-        pyxel.blt(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 192, 128, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
+        pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 192, 128, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

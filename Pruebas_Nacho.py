@@ -63,7 +63,7 @@ class Mario():
             self.__vx = 0
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 50:
-            if self.__y - self.__vy * 5 > 50:
+            if self.__y - self.__vy * 5 > 50:  #esto dice que solo puedas saltar si la diferencia entre tu posicion y lo q vas a saltar no sea mas grande que x, para que no puedas saltar hasta el infinito
                 self.__vy = 1
                 self.__y -= self.__vy * 5  # la velocidad a la que salta
 
@@ -153,7 +153,12 @@ class App():
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
+    def CrearBLoques(self):
+        bloques = []
+        for i in range():
+            pass
     # Se crea una lista llenas de los bloques q conforman el suelo
+
     def __crear_suelo(self, num_suelo):
         bloques = []
         for i in range(num_suelo):
@@ -169,7 +174,7 @@ class App():
 
         while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
 
-            self.fondo.update(self.fondo.fondo_u + 0.5, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
+            self.fondo.update(self.fondo.fondo_u + 0.2, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
             break # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):

@@ -29,6 +29,8 @@ class Goomba(Enemigos):
         super().__init__(x, y)
         self.__w = 16
         self.__h = 16
+        self.__sprite_x = 0
+        self.__sprite_y = 0
 
     @property
     def w(self):
@@ -37,6 +39,14 @@ class Goomba(Enemigos):
     @property
     def h(self):
         return self.__h
+
+    @property
+    def sprite_x(self):
+        return self.__sprite_x
+
+    @property
+    def sprite_y(self):
+        return self.__sprite_y
 
     def update(self):
        Goomba.mover(self)
@@ -46,6 +56,8 @@ class Koopa_Troopa(Enemigos):
         super().__init__(x, y)
         self.__w = 16
         self.__h = 24
+        self.__sprite_x = 0
+        self.__sprite_y = 24
 
     @property
     def w(self):
@@ -54,6 +66,14 @@ class Koopa_Troopa(Enemigos):
     @property
     def h(self):
         return self.__h
+
+    @property
+    def sprite_x(self):
+        return self.__sprite_x
+
+    @property
+    def sprite_y(self):
+        return self.__sprite_y
 
     def update(self):
         pass

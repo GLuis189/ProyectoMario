@@ -17,10 +17,11 @@ class Enemigos():
     @property
     def vx(self):
         return self.__vx
+
 # Hacer los setter para poder modificar la velocidad
-    @vx.setter
-    def fiajar_x(self, x):
-        self.__x = x
+
+    def mover(self):
+        self.__x = self.x + self.vx
 
 
 class Goomba(Enemigos):
@@ -38,6 +39,24 @@ class Goomba(Enemigos):
         return self.__h
 
     def update(self):
-        self.__x = self.x + self.vx
+       Goomba.mover(self)
+
+class Koopa_Troopa(Enemigos):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.__w = 16
+        self.__h = 24
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    def update(self):
+        pass
+
 
 

@@ -1,21 +1,28 @@
 import pyxel
 
-from Clases1.bloque import Bloque
 from Clases1.mario import Mario
+
+from Clases1.bloque import Suelo
+from Clases1.bloque import Incognita
+
 from Clases1.enemigos import Goomba
+from Clases1.enemigos import Koopa_Troopa
 
-
-class Poderes():
-    pass
-
+from Clases1.moneda import Moneda
 
 class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
-        self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
         self.Mario = Mario()
-        self.goomba = Goomba(x=30, y=30)
+
+        self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
+        self.Incognita = Incognita(20, 20)
+
+        self.goomba = Goomba(128, 30)
+        self.koopa = Koopa_Troopa(30, 30)
+
+        self.Monedas = self.__crear_monedas(3)
 
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
@@ -24,8 +31,17 @@ class App():
     def __crear_suelo(self, num_suelo):
         bloques = []
         for i in range(num_suelo):
-            bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+            bloques.append(Suelo(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
+
+    def __crear_monedas(self, num_monedas):
+        monedas = []
+        for i in range(num_monedas):
+            monedas.append(Moneda(40 * i + 5, 80))
+        return monedas
+
+
+
 
     # Luego crearemos update y draw
     def update(self):
@@ -45,7 +61,14 @@ class App():
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
 
+        pyxel.blt(self.Incognita.x, self.Incognita.y, 0, 176, 27, self.Incognita.w, self.Incognita.h, 12)
+
         pyxel.blt(self.goomba.x, self.goomba.y, 1, 0, 0, self.goomba.w, self.goomba.h, 12)
+        pyxel.blt(self.koopa.x, self.koopa.y, 1, 0, 24, self.koopa.w, self.koopa.h, 12)
+
+        for item in self.Monedas:
+            pyxel.blt(item.x, item.y, 0, 2, 29, item.w, item.h, 12)
+
 
 
 App()

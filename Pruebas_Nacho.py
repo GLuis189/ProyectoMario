@@ -38,6 +38,9 @@ class Mario():
         self.__h = 16
         self.__vy = 0
         self.__vx = 0
+        self.__q1 = 2
+        self.__q2 = 98
+
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
@@ -47,52 +50,67 @@ class Mario():
         # Al pulsar A o <- el mario se mueve a la izq
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
-            self.__vx -= 1
+            self.__vx = -1
+            self.__q1 = 18
+            self.__q2 = 98
+           # if self.__vx < 0:
+            #    self.__w = -self.__w
+
+
         else:
+
             self.__vx = 0
+            #self.__q1 = 2
+            #self.__q2 = 98
+            #self.__w = self.__w
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
         # Con self.__x if 128//2 == self.__x - self.__w hago que no se mueva si esta en la mitad
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
 
-
-
-            self.__x = self.__x if 192//2 == self.__x - self.__w else max(0, self.__x + 2)
-
-            self.__vx += 1
+            self.__x = self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
+            self.__vx = 1
+            self.__q1 = 18
+            self.__q2 = 98
         else:
             self.__vx = 0
+            #self.__q1 = 2
+            #self.__q2 = 98
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 50:
-            if self.__y - self.__vy * 5 > 50:  #esto dice que solo puedas saltar si la diferencia entre tu posicion y lo q vas a saltar no sea mas grande que x, para que no puedas saltar hasta el infinito
+            if self.__y - self.__vy * 5 > 10:  #esto dice que solo puedas saltar si la diferencia entre tu posicion y lo q vas a saltar no sea mas grande que x, para que no puedas saltar hasta el infinito
                 self.__vy = 1
                 self.__y -= self.__vy * 5  # la velocidad a la que salta
-
+                self.__q1 = 2
+                self.__q2 = 79
         else:
             self.__vy = 0
+            self.__q1 = 2
+            self.__q2 = 98
         #if self.__y > 64:
          #   self.__vy = 1
           #  self.__y -= self.__vy * 2  # la velocidad a la que salta
 
 
 
-        if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
-            self.__y = self.__y
-        else:
-            self.__y += self.__vy + 1
+        #if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
+        #    self.__y = self.__y
+        #else:
+        self.__y += self.__vy + 1
 
 
-    def colisionar(self):
-        self.__y -= 16
+    def colisionar(self, x):
+        self.__y = x - 16
         self.__vy = 0
+
 
 
     def draw(self):
         pyxel.blt(self.__x,
                   self.__y,
                   0,
-                  18 if self.__vx != 0 else 2,
-                  79 if self.__vy >= 1 else 98,
-                  self.__w if self.__vx >= 0 else self.__w * -1,
+                  self.__q1,
+                  self.__q2,
+                  -self.__w if self.__vx < 0 else self.__w,
                   self.__h,
                   12)
 
@@ -127,8 +145,8 @@ class Bloque():
 
     def update(self, mario: Mario):
         if self.__is_activo:
-            if mario.y == self.__y - 8:
-                 mario.colisionar()
+            if mario.y == self.__y:
+                 mario.colisionar(self.y)
 
 
 class Enemigos():
@@ -149,7 +167,7 @@ class App():
         self.fondo = Fondo()  # llamamos a la clase fondo
         self.fondo.fondo_u = 2
         self.fondo.fondo_v = 4
-        self.bloque = Bloque(10, 60)
+        self.bloque = Bloque(30, 60)
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
@@ -167,7 +185,18 @@ class App():
 
 #Luego crearemos update y draw
     def update(self):
+
         self.Mario.update()
+        if (
+                self.Mario.x + 10 >= self.bloque.x
+                and self.Mario.x <= self.bloque.x + 11
+                and self.Mario.y + 16 >= self.bloque.y
+                and self.Mario.y <= self.bloque.y + 8
+
+            ):
+            self.Mario.colisionar(self.bloque.y)
+        if self.Suelo[0].y == self.Mario.y:
+            self.Mario.colisionar(self.Suelo[0].y)
 
         for item in self.Suelo:
             item.update(self.Mario)
@@ -175,7 +204,7 @@ class App():
         while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
 
             self.fondo.update(self.fondo.fondo_u + 0.2, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
-            break # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
+            break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):
         pyxel.cls(6)

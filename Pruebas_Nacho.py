@@ -2,9 +2,6 @@ import pyxel
 
 
 
-
-
-# Hay que ver como va lo de las herencias
 #class Suelo(Bloque):
 #   pass
 class Fondo():
@@ -65,10 +62,10 @@ class Mario():
         else:
             self.__vx = 0
         # Al pulsar el espacio el mario salta
-        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
-            self.__vy = 1
-
-            self.__y -= self.__vy * 5  # la velocidad a la que salta
+        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 50:
+            if self.__y - self.__vy * 5 > 50:
+                self.__vy = 1
+                self.__y -= self.__vy * 5  # la velocidad a la que salta
 
         else:
             self.__vy = 0
@@ -78,15 +75,14 @@ class Mario():
 
 
 
-        #if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
-            #self.__y = self.__y
-        #else:
-        self.__y += self.__vy + 1
+        if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
+            self.__y = self.__y
+        else:
+            self.__y += self.__vy + 1
 
 
     def colisionar(self):
-
-        self.__y -= 20
+        self.__y -= 16
         self.__vy = 0
 
 
@@ -126,13 +122,13 @@ class Bloque():
         return self.__h
 
     # No tiene mucho sentido este draw asiq si eso lo borramos luego
-    def draw(self):
-        pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
+    #def draw(self):
+     #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
 
     def update(self, mario: Mario):
         if self.__is_activo:
-            if mario.y == self.__y:
-                mario.colisionar()
+            if mario.y == self.__y - 8:
+                 mario.colisionar()
 
 
 class Enemigos():
@@ -149,11 +145,11 @@ class App():
         pyxel.load("mario_assets.pyxres")
         self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
         self.Mario = Mario()
-        self.fondo = Fondo()  # llamamos a la clase fondo
 
+        self.fondo = Fondo()  # llamamos a la clase fondo
         self.fondo.fondo_u = 2
         self.fondo.fondo_v = 4
-
+        self.bloque = Bloque(10, 60)
         pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
@@ -180,7 +176,7 @@ class App():
         pyxel.cls(6)
 
         self.Mario.draw()
-
+        pyxel.blt(self.bloque.x, self.bloque.y, 0, 0, 62, 16, 16, 12)
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)

@@ -27,6 +27,7 @@ class Mario():
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
+        self.__Contador_Monedas = 0
 
     def update(self):
         # Hay que hacer lo del visor para que a la izq se pare

@@ -50,6 +50,7 @@ class Mario():
                 self.__vy = 1
                 self.__y -= self.__vy * 6  # la velocidad a la que salta
 
+
         if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
             self.__y = self.__y
         else:
@@ -58,6 +59,9 @@ class Mario():
     def colisionar(self):
 
         self.__vy = 0
+
+    def tocar_moneda(self):
+        self.__Contador_Monedas += 1
 
     def draw(self):
         pyxel.blt(self.__x,

@@ -39,6 +39,9 @@ class Poder():
     def update(self, mario: Mario):
         if mario.Super_Mario:
             self.__tipo = 1
+        if self.__tipo == 1:
+            self.__sprite_x = 55
+            self.__sprite_y = 46
 
     def tocar_mario(self, mario: Mario):
         if (

@@ -1,4 +1,4 @@
-import pyxel
+
 from Clases1.mario import Mario
 
 class Bloque():
@@ -22,7 +22,7 @@ class Bloque():
     def update(self, mario: Mario):
         if self.__is_activo:
             if mario.y == self.__y:
-                 mario.colisionar(self.__y)
+                 mario.colisionar_arriba(self.__y)
 
 class Suelo(Bloque):
     def __init__(self, x, y):

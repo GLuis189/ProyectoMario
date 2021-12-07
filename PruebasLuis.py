@@ -16,7 +16,7 @@ from Clases1.poderes import Poder
 
 class App():
     def __init__(self):
-        pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
+        pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60, scale=4)
         pyxel.load("mario_assets.pyxres")
 
         self.Mario = Mario()
@@ -62,11 +62,19 @@ class App():
             ):
             self.Mario.colisionar_arriba(self.Ladrillos_Rompibles.y)
 
+        if (
+                self.Mario.x >= self.Ladrillos_Rompibles.x
+                and self.Mario.x <= self.Ladrillos_Rompibles.x + self.Ladrillos_Rompibles.w
+                and self.Mario.y >= self.Ladrillos_Rompibles.y
+                and self.Mario.y <= self.Ladrillos_Rompibles.y - self.Ladrillos_Rompibles.h
+
+            ):
+            self.Mario.colisionar_abajo(self.Ladrillos_Rompibles.y)
+
         # Asi es como he hecho que el suelo sea colisionable
         # Para un futuro podemos hacer una lista de los objetos colisionables y
         # con este algoritmo hacer que sea colisionable por arriba almenos
         for item in self.Suelo:
-            #item.update(self.Mario)
             if (
                  self.Mario.x + abs(self.Mario.w) >= item.x
                     and self.Mario.x <= item.x + item.w
@@ -108,6 +116,8 @@ class App():
                   self.Ladrillos_Rompibles.sprite_y, self.Ladrillos_Rompibles.w, self.Ladrillos_Rompibles.h, 12)
         pyxel.blt(self.Ladrillos_Irrompibles.x, self.Ladrillos_Irrompibles.y, 0, self.Ladrillos_Irrompibles.sprite_x,
                   self.Ladrillos_Irrompibles.sprite_y, self.Ladrillos_Irrompibles.w, self.Ladrillos_Irrompibles.h, 12)
+        pyxel.blt(self.Incognita.x, self.Incognita.y, 0, self.Incognita.sprite_x,
+                  self.Incognita.sprite_y, self.Incognita.w, self.Incognita.h, 12)
 
         pyxel.blt(self.Poderes.x, self.Poderes.y, 0, self.Poderes.sprite_x, self.Poderes.sprite_y, self.Poderes.w, self.Poderes.h, 12)
 App()

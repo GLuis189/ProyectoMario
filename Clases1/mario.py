@@ -100,7 +100,7 @@ class Mario():
         self.__vy = 0
 
     def colisionar_abajo(self, y_bloque):
-        self.__y = y_bloque + self.__h
+        self.__y = y_bloque - self.__h
 
     def tocar_moneda(self):
         self.__Contador_Monedas += 1

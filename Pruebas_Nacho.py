@@ -207,15 +207,15 @@ class App():
 
             self.Mario.colisionarArriba(self.bloque.y)
 
-        if (self.Mario.x + abs(self.Mario.w) / 2 >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w / 2
-                and self.Mario.y + self.Mario.h / 2 >= self.bloque.y + self.bloque.h and self.Mario.y <= self.bloque.y) / 2:
+        if (self.Mario.x + abs(self.Mario.w) >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w
+                and self.Mario.y + self.Mario.h >= self.bloque.y + self.bloque.h and self.Mario.y <= self.bloque.y):
 
             self.Mario.colisionarAbajo(self.bloque.y)
 
         for item in self.Suelo:
             # item.update(self.Mario)
-            if (self.Mario.x + 10 >= item.x and self.Mario.x <= item.x + 11
-                    and self.Mario.y + 16 >= item.y and self.Mario.y <= item.y + 8):
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
 
                 self.Mario.colisionarArriba(item.y)
 

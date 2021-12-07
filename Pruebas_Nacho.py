@@ -31,6 +31,15 @@ class Mario():
     def vy(self):
         return self.__vy
 
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+
     def __reset(self):
         self.__x = 20
         self.__y = 64
@@ -53,6 +62,8 @@ class Mario():
             self.__vx = -1
             self.__q1 = 18
             self.__q2 = 98
+            if self.__w > 0:
+                self.__w = -self.__w
            # if self.__vx < 0:
             #    self.__w = -self.__w
 
@@ -71,6 +82,8 @@ class Mario():
             self.__vx = 1
             self.__q1 = 18
             self.__q2 = 98
+            if self.__w < 0:
+                self.__w = -self.__w
         else:
             self.__vx = 0
             #self.__q1 = 2
@@ -98,10 +111,12 @@ class Mario():
         self.__y += self.__vy + 1
 
 
-    def colisionar(self, x):
-        self.__y = x - 16
+    def colisionarArriba(self, x):
+        self.__y = x - self.__h
         self.__vy = 0
 
+    def colisionarAbajo(self, x):
+        self.__y = x + self.__h
 
 
     def draw(self):
@@ -110,7 +125,7 @@ class Mario():
                   0,
                   self.__q1,
                   self.__q2,
-                  -self.__w if self.__vx < 0 else self.__w,
+                  self.__w,
                   self.__h,
                   12)
 
@@ -143,10 +158,10 @@ class Bloque():
     #def draw(self):
      #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
 
-    def update(self, mario: Mario):
+    def update(self, x, y):
         if self.__is_activo:
-            if mario.y == self.__y:
-                 mario.colisionar(self.y)
+            self.__x = x
+            self.__y = y
 
 
 class Enemigos():
@@ -161,7 +176,7 @@ class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
-        self.Suelo = self.__crear_suelo(12)  # Con esta función creas el suelo
+        self.Suelo = self.__crear_suelo(20)  # Con esta función creas el suelo
         self.Mario = Mario()
 
         self.fondo = Fondo()  # llamamos a la clase fondo
@@ -187,23 +202,32 @@ class App():
     def update(self):
 
         self.Mario.update()
-        if (
-                self.Mario.x + 10 >= self.bloque.x
-                and self.Mario.x <= self.bloque.x + 11
-                and self.Mario.y + 16 >= self.bloque.y
-                and self.Mario.y <= self.bloque.y + 8
+        if (self.Mario.x + abs(self.Mario.w) >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w
+                and self.Mario.y + self.Mario.h >= self.bloque.y and self.Mario.y <= self.bloque.y + self.bloque.h):
 
-            ):
-            self.Mario.colisionar(self.bloque.y)
-        if self.Suelo[0].y == self.Mario.y:
-            self.Mario.colisionar(self.Suelo[0].y)
+            self.Mario.colisionarArriba(self.bloque.y)
+
+        if (self.Mario.x + abs(self.Mario.w) >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w
+                and self.Mario.y + self.Mario.h >= self.bloque.y and self.Mario.y <= self.bloque.y + self.bloque.h):
+
+            self.Mario.colisionarAbajo(self.bloque.y)
 
         for item in self.Suelo:
-            item.update(self.Mario)
+            # item.update(self.Mario)
+            if (self.Mario.x + 10 >= item.x and self.Mario.x <= item.x + 11
+                    and self.Mario.y + 16 >= item.y and self.Mario.y <= item.y + 8):
+
+                self.Mario.colisionarArriba(item.y)
+
+        #for item in self.Suelo:
+         #   item.update(self.Mario)
 
         while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
 
-            self.fondo.update(self.fondo.fondo_u + 0.2, self.fondo.fondo_v)  # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
+            Bloque.update(self.bloque, self.bloque.x-0.7, self.bloque.y)
+            for item in self.Suelo:
+                item.update(item.x - 0.7, item.y)
+                                                                # esto se va a la funcion update de la clase fondo de arriba y le cambia el valor de x. Cuanto mas grande mas rapido avanzas
             break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):
@@ -214,5 +238,5 @@ class App():
         #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
-        pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
+        #pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

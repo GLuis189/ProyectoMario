@@ -1,5 +1,6 @@
 from Clases1.mario import Mario
 
+
 class Poder():
     def __init__(self, x, y, ):
         self.__x = x
@@ -40,7 +41,12 @@ class Poder():
             self.__tipo = 1
 
     def tocar_mario(self, mario: Mario):
-        if (mario.x >= self.__x and mario.x <= self.__x and mario.y >= self.__y and mario.y <= self.__y):
+        if (
+            mario.x + abs(mario.w) >= self.__x
+            and mario.x <= self.__x + self.__w
+            and mario.y - mario.h >= self.__y
+            and mario.y <= self.__y + self.__h
+        ):
             if self.__tipo == 0:
               mario.tocar_poder(0)
             else:

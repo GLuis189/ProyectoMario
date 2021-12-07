@@ -14,6 +14,14 @@ class Mario():
         return self.__y
 
     @property
+    def h(self):
+        return self.__h
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
     def vy(self):
         return self.__vy
 
@@ -31,7 +39,6 @@ class Mario():
         self.__w = 14
         self.__h = 16
         self.__vy = 0
-        self.__vx = 0
 
         self.__is_alive = True
         self.__Mini_Mario = True
@@ -49,29 +56,22 @@ class Mario():
         # Al pulsar A o <- el mario se mueve a la izq
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
-            self.__vx = -1
-
-
-        else:
-            self.__vx = 0
+            if self.__w > 0:
+                self.__w = -self.__w
 
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
         # Con self.__x if 128//2 == self.__x - self.__w hago que no se mueva si esta en la mitad
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
             self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
-            self.__vx = 1
+            if self.__w < 0:
+                self.__w = -self.__w
 
-        else:
-            self.__vx = 0
 
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 100:
             if self.__y - self.__vy * 5 > 10:
                 self.__vy = 1
                 self.__y -= self.__vy * 5  # la velocidad a la que salta
-
-        else:
-            self.__vy = 0
 
          # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
 
@@ -95,9 +95,12 @@ class Mario():
         self.__sprite_x = 169
         self.__sprite_y = 81
 
-    def colisionar(self, y_bloque):
-        self.__y = y_bloque - 16
+    def colisionar_arriba(self, y_bloque):
+        self.__y = y_bloque - self.__h
         self.__vy = 0
+
+    def colisionar_abajo(self, y_bloque):
+        self.__y = y_bloque + self.__h
 
     def tocar_moneda(self):
         self.__Contador_Monedas += 1

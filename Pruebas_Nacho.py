@@ -45,7 +45,7 @@ class Mario():
         self.__y = 64
         self.__w = 14
         self.__h = 16
-        self.__vy = 0
+        self.__vy = 1
         self.__vx = 0
         self.__q1 = 2
         self.__q2 = 98
@@ -59,9 +59,10 @@ class Mario():
         # Al pulsar A o <- el mario se mueve a la izq
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
-            self.__vx = -1
-            self.__q1 = 18
-            self.__q2 = 98
+            self.__vx = 1
+            if self.__vx > 0:
+                self.__q1 = 18
+                self.__q2 = 98
             if self.__w > 0:
                 self.__w = -self.__w
            # if self.__vx < 0:
@@ -80,40 +81,38 @@ class Mario():
 
             self.__x = self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
             self.__vx = 1
-            self.__q1 = 18
-            self.__q2 = 98
+            if self.__vx > 0:
+                self.__q1 = 18
+                self.__q2 = 98
             if self.__w < 0:
                 self.__w = -self.__w
         else:
             self.__vx = 0
-            #self.__q1 = 2
-            #self.__q2 = 98
-        # Al pulsar el espacio el mario salta
-        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 50:
-            if self.__y - self.__vy * 5 > 10:  #esto dice que solo puedas saltar si la diferencia entre tu posicion y lo q vas a saltar no sea mas grande que x, para que no puedas saltar hasta el infinito
-                self.__vy = 1
-                self.__y -= self.__vy * 5  # la velocidad a la que salta
-                self.__q1 = 2
-                self.__q2 = 79
-        else:
-            self.__vy = 0
             self.__q1 = 2
             self.__q2 = 98
-        #if self.__y > 64:
-         #   self.__vy = 1
-          #  self.__y -= self.__vy * 2  # la velocidad a la que salta
+        # Al pulsar el espacio el mario salta
+        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
+               #esto dice que solo puedas saltar si la diferencia entre tu posicion y lo q vas a saltar no sea mas grande que x, para que no puedas saltar hasta el infinito
+            self.__vy = 2
+            self.__y -= self.__vy * 2  # la velocidad a la que salta
+            if self.__vy > 0:
+                self.__q1 = 2
+                self.__q2 = 79
+            else:
+                self.__q1 = 2
+                self.__q2 = 98
+        else:
+            self.__vy = 0
 
 
-
-        #if self.__y == 112 - 16:  # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
-        #    self.__y = self.__y
-        #else:
-        self.__y += self.__vy + 1
+        self.__vy = 1
+        self.__y += self.__vy
 
 
     def colisionarArriba(self, x):
         self.__y = x - self.__h
         self.__vy = 0
+
 
     def colisionarAbajo(self, x):
         self.__y = x + self.__h
@@ -202,13 +201,14 @@ class App():
     def update(self):
 
         self.Mario.update()
+
         if (self.Mario.x + abs(self.Mario.w) >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w
                 and self.Mario.y + self.Mario.h >= self.bloque.y and self.Mario.y <= self.bloque.y + self.bloque.h):
 
             self.Mario.colisionarArriba(self.bloque.y)
 
-        if (self.Mario.x + abs(self.Mario.w) >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w
-                and self.Mario.y + self.Mario.h >= self.bloque.y and self.Mario.y <= self.bloque.y + self.bloque.h):
+        if (self.Mario.x + abs(self.Mario.w) / 2 >= self.bloque.x and self.Mario.x <= self.bloque.x + self.bloque.w / 2
+                and self.Mario.y + self.Mario.h / 2 >= self.bloque.y + self.bloque.h and self.Mario.y <= self.bloque.y) / 2:
 
             self.Mario.colisionarAbajo(self.bloque.y)
 

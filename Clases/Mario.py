@@ -126,6 +126,10 @@ class Mario():
     def CogerSeta(self):
         self.Supermario = True
 
+    def activarinterrogacion(self):
+        activo = True
+
+
     def draw(self):
         pyxel.blt(self.__x,
                   self.__y,

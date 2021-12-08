@@ -41,7 +41,6 @@ class Poder():
         return self.__is_active
 
     def update(self, mario: Mario):
-        #self.__is_active = False
         if mario.Super_Mario or mario.Mario_Fuego:
             self.__tipo = 1
         if self.__tipo == 1:

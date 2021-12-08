@@ -38,7 +38,7 @@ class App():
         self.Poderes = self.__crear_poderes(2)
 
         self.Nubes = Nube(70, 20)
-        self.Montana
+        self.Montana = Montana(3,3)
 
         pyxel.run(self.update, self.draw)
 
@@ -65,6 +65,7 @@ class App():
     # Luego crearemos update y draw
     def update(self):
         self.Mario.update()
+
         for item in self.Poderes:
             item.update(self.Mario)
             if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -116,8 +117,6 @@ class App():
         # Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, item.sprite_x, item.sprite_y, item.w, item.h, 12)
-
-
 
         pyxel.blt(self.goomba.x, self.goomba.y, 1, self.goomba.sprite_x, self.goomba.sprite_y, self.goomba.w, self.goomba.h, 12)
         pyxel.blt(self.koopa.x, self.koopa.y, 1, self.koopa.sprite_x, self.koopa.sprite_y, self.koopa.w, self.koopa.h, 12)

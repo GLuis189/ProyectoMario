@@ -43,13 +43,14 @@ class Mario():
     def __reset(self):
         self.__x = 20
         self.__y = 64
-        self.__w = 14
+        self.__w = 15
         self.__h = 16
         self.__vy = 1
         self.__vx = 0
         self.__q1 = 2
         self.__q2 = 98
         self.encimadebloque = False
+        self.Supermario = False
 
         self.__is_alive = True
         self.__Super_Mario = False
@@ -58,12 +59,17 @@ class Mario():
     def update(self):
         # Hay que hacer lo del visor para que a la izq se pare
         # Al pulsar A o <- el mario se mueve a la izq
+        if self.Supermario == True:
+            self.__w = 16
+            self.__h = 32
+            self.__q1 = 54
+            self.__q2 = 82
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
             self.__vx = 1
-            if self.__vx > 0:
-                self.__q1 = 18
-                self.__q2 = 98
+            #if self.__vx > 0:
+                #self.__q1 = 18
+                #self.__q2 = 98
             if self.__w > 0:
                 self.__w = -self.__w
            # if self.__vx < 0:
@@ -73,36 +79,46 @@ class Mario():
         else:
 
             self.__vx = 0
-            self.__q1 = 2
-            self.__q2 = 98
+            #self.__q1 = 2
+            #self.__q2 = 98
             #self.__w = self.__w
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
         # Con self.__x if 128//2 == self.__x - self.__w hago que no se mueva si esta en la mitad
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
 
-            self.__x = self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
+            self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
             self.__vx = 1
-            if self.__vx > 0:
-                self.__q1 = 18
-                self.__q2 = 98
+            #if self.__vx > 0 and not self.Supermario:
+             #   self.__q1 = 18
+              #  self.__q2 = 98
+
+            #if self.__vx > 0 and self.Supermario:
+             #   self.__q1 = 88
+              #  self.__q2 = 82
+            #else:
+             #   self.__q1 = 18
+              #  self.__q2 = 98
             if self.__w < 0:
                 self.__w = -self.__w
-        else:
-            self.__vx = 0
-            self.__q1 = 2
-            self.__q2 = 98
+        #else:
+         #   self.__vx = 0
+          #  if self.__vx == 0 and not self.Supermario:
+           #     self.__q1 = 0
+            #    self.__q2 = 98
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
-            if self.encimadebloque == True:
-                self.encimadebloque = False
-                self.__vy = 1
-                self.__y -= self.__vy * 20  # la velocidad a la que salta
-                if self.__vy > 0:
-                    self.__q1 = 2
-                    self.__q2 = 79
-                else:
-                    self.__q1 = 2
-                    self.__q2 = 98
+            #if self.encimadebloque == True:
+             #   self.encimadebloque = False
+            self.__vy = 1
+            self.__y -= self.__vy * 5  # la velocidad a la que salta
+            if self.__vy > 0 and not self.Supermario:
+                self.__q1 = 2
+                self.__q2 = 80
+
+            elif self.__vy > 0 and self.Supermario:
+                self.__q1 = 146
+                self.__q2 = 80
+
         else:
             self.__vy = 0
 
@@ -117,8 +133,11 @@ class Mario():
         self.encimadebloque = True
 
     def colisionarAbajo(self, x):
+
         self.__y = x + self.__h
 
+    def CogerSeta(self):
+        self.Supermario = True
 
     def draw(self):
         pyxel.blt(self.__x,
@@ -155,6 +174,7 @@ class Bloque():
     def h(self):
         return self.__h
 
+
     # No tiene mucho sentido este draw asiq si eso lo borramos luego
     #def draw(self):
      #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
@@ -170,8 +190,46 @@ class Enemigos():
 
 
 class Poderes():
-    pass
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+        self.__w = 16
+        self.__h = 16
+        self.__tipo = 0
+        self.__is_active = True
+        self.__sprite_x = 0
+        self.__sprite_y = 45
 
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    @property
+    def sprite_x(self):
+        return self.__sprite_x
+
+    @property
+    def sprite_y(self):
+        return self.__sprite_y
+
+    @property
+    def is_activo(self):
+        return self.__is_active
+
+    def update(self):
+        self.__is_active = False
 
 class App():
     def __init__(self):
@@ -179,6 +237,7 @@ class App():
         pyxel.load("mario_assets.pyxres")
         self.Suelo = self.__crear_suelo(20)  # Con esta función creas el suelo
         self.Mario = Mario()
+        self.Seta = Poderes(100, 60)
         self.BLoques = self.crearBloques()
         self.fondo = Fondo()  # llamamos a la clase fondo
         self.fondo.fondo_u = 2
@@ -207,6 +266,11 @@ class App():
     def update(self):
 
         self.Mario.update()
+        if (self.Mario.x + abs(self.Mario.w) >= self.Seta.x and self.Mario.x <= self.Seta.x + self.Seta.w
+                and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
+            self.Seta.update()
+            self.Mario.CogerSeta()
+
         for item in self.BLoques:
             if self.Mario.y < item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -243,8 +307,11 @@ class App():
         pyxel.cls(6)
 
         self.Mario.draw()
+        if self.Seta.is_activo == True:
+            pyxel.blt(self.Seta.x, self.Seta.y, 0, self.Seta.sprite_x, self.Seta.sprite_y, self.Seta.w, self.Seta.h, 12)
 
-        #Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+        #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+
         for item in self.BLoques:
             pyxel.blt(item.x, item.y, 0, 0, 62, 16, 16, 12)
         for item in self.Suelo:

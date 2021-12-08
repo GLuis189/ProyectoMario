@@ -37,6 +37,7 @@ class Mario():
         self.__q2 = 98
         self.encimadebloque = False
         self.Supermario = False
+        self.v = 0
 
         self.__is_alive = True
         self.__Super_Mario = False
@@ -69,7 +70,7 @@ class Mario():
 
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
 
-            self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
+            self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
             self.__vx = 1
             if self.__vx > 0 and not self.Supermario:
                 self.__q1 = 18

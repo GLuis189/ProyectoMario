@@ -12,7 +12,6 @@ class Goomba(Enemigos):
 
     def mover(self):
         self.Velocidad_X = -2
-        return velocidad_X
 
 class Koopa_Troopa(Enemigos):
     def __init__(self, posicion_x, posicion_y, velocidad_x, concha):

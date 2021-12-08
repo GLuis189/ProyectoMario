@@ -33,6 +33,14 @@ class Mario():
     def Mario_Fuego(self):
         return self.__Mario_Fuego
 
+    @property
+    def n_vidas(self):
+        return self.__Vidas
+
+    @property
+    def alive(self):
+        return self.__is_alive
+
     def __reset(self):
         self.__x = 20
         self.__y = 40
@@ -40,6 +48,7 @@ class Mario():
         self.__h = 16
         self.__vy = 0
 
+        self.__Vidas = 3
         self.__is_alive = True
         self.__Mini_Mario = True
         self.__Super_Mario = False
@@ -83,6 +92,9 @@ class Mario():
         if self.__Mario_Fuego:
             self.mario_fuego()
 
+        if self.__Vidas == 0:
+            self.__reset()
+
     def super_mario(self):
         self.__w = 16
         self.__h = 32
@@ -116,6 +128,8 @@ class Mario():
             self.__Super_Mario = False
             self.__Mario_Fuego = True
 
+    def perder_vida(self):
+        self.__Vidas -= 1
 
 
     def draw(self):

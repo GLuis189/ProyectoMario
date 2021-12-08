@@ -1,3 +1,5 @@
+from Clases1.mario import Mario
+
 class Enemigos():
     def __init__(self, x, y):
         self.__x = x
@@ -18,11 +20,13 @@ class Enemigos():
     def vx(self):
         return self.__vx
 
-# Hacer los setter para poder modificar la velocidad
-
     def mover(self):
         self.__x = self.x + self.vx
 
+    def tocar_Mario(self, mario: Mario):
+        if mario.alive:
+            if (mario.x + 16 >= self.__x and mario.x <= self.__x + 40 and mario.y + 16 >= self.__y and mario.y <= self.__y + 8 and mario.vy > 0):
+                mario.perder_vida()
 
 class Goomba(Enemigos):
     def __init__(self, x, y):
@@ -50,6 +54,7 @@ class Goomba(Enemigos):
 
     def update(self):
        Goomba.mover(self)
+
 
 class Koopa_Troopa(Enemigos):
     def __init__(self, x, y):

@@ -31,13 +31,13 @@ class Moneda():
     def is_active(self):
         return self.__is_active
 
-    def update(self, mario: Mario):
+    def update_moneda(self, mario: Mario):
         if self.__is_active:
             if mario.y == self.__y and mario.x == self.__x:
                 mario.tocar_moneda()
                 self.__is_active = False
 
     def draw(self):
-        pyxel.blt(self.x, self.y, 0, 2, 29, self.w, self.h, 12)
+        pyxel.blt(self.x, self.y, 0, 2, 29, self.__w, self.__h, 12)
 
 

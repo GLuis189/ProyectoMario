@@ -36,26 +36,24 @@ class Poder():
     def sprite_y(self):
         return self.__sprite_y
 
+    @property
+    def is_active(self):
+        return self.__is_active
+
     def update(self, mario: Mario):
-        self.tocar_mario(mario)
-        if mario.Super_Mario:
+        #self.__is_active = False
+        if mario.Super_Mario or mario.Mario_Fuego:
             self.__tipo = 1
         if self.__tipo == 1:
             self.__sprite_x = 55
             self.__sprite_y = 46
 
     def tocar_mario(self, mario: Mario):
-        if (
-            mario.x + abs(mario.w) >= self.__x
-            and mario.x <= self.__x + self.__w
-            and mario.y - mario.h >= self.__y
-            and mario.y <= self.__y + self.__h
-        ):
-            if self.__tipo == 0:
-              mario.tocar_poder(0)
-            if self.__tipo == 1:
-                mario.tocar_poder(1)
-
+        if self.__tipo == 0:
+          mario.tocar_poder(0)
+        if self.__tipo == 1:
+            mario.tocar_poder(1)
+        self.__is_active = False
 
 
 

@@ -2,6 +2,7 @@ import pyxel
 #import random
 from Bloques import Bloque
 from tuberia import Tuberia
+from interrogacion import BloqueInterrogacion
 from Mario import Mario
 #from Enemigos import Enemigos
 from Poderes import Poderes
@@ -43,12 +44,14 @@ class App():
     def crearInterrogacion(self):
         bloques = [Bloque(160, 48), Bloque(368, 10)]
         return bloques
+
 #Luego crearemos update y draw
     def update(self):
 
         self.Mario.update()
 
         # coger Seta
+
         if (self.Mario.x + abs(self.Mario.w) >= self.Seta.x and self.Mario.x <= self.Seta.x + self.Seta.w
                 and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
             self.Seta.update()

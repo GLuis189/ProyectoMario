@@ -117,7 +117,7 @@ class Mario():
     def tocar_moneda(self):
         self.__Contador_Monedas += 1
 
-    def tocar_poder(self, n):
+    def tocar_poder(self, n = 0):
         if n == 0:
             self.__Mini_Mario = False
             self.__Super_Mario = True

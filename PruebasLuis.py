@@ -14,6 +14,10 @@ from Clases1.moneda import Moneda
 
 from Clases1.poderes import Poder
 
+from Clases1.fondo import Nube
+from Clases1.fondo import Montana
+
+
 class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60, scale=4)
@@ -31,10 +35,13 @@ class App():
 
         self.Monedas = self.__crear_monedas(3)
 
-        self.Poderes = Poder(70, 90)
+        self.Poderes = self.__crear_poderes(2)
 
-        pyxel.playm(0, loop=True)
+        self.Nubes = Nube(70, 20)
+        self.Montana
+
         pyxel.run(self.update, self.draw)
+
 
     # Se crea una lista llenas de los bloques q conforman el suelo
     def __crear_suelo(self, num_suelo):
@@ -46,12 +53,24 @@ class App():
     def __crear_monedas(self, num_monedas):
         monedas = []
         for i in range(num_monedas):
-            monedas.append(Moneda(40 * i + 5, 80))
+            monedas.append(Moneda(40 * i, 80))
         return monedas
+
+    def __crear_poderes(self, num_poderes):
+        poderes = []
+        for i in range(num_poderes):
+            poderes.append(Poder(20 * i, 80))
+        return poderes
 
     # Luego crearemos update y draw
     def update(self):
         self.Mario.update()
+        for item in self.Poderes:
+            item.update(self.Mario)
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                self.Mario.tocar_poder()
+
 
         if (
                 self.Mario.x + abs(self.Mario.w) >= self.Ladrillos_Rompibles.x
@@ -63,12 +82,8 @@ class App():
             self.Mario.colisionar_arriba(self.Ladrillos_Rompibles.y)
 
         if (
-                self.Mario.x >= self.Ladrillos_Rompibles.x
-                and self.Mario.x <= self.Ladrillos_Rompibles.x + self.Ladrillos_Rompibles.w
-                and self.Mario.y >= self.Ladrillos_Rompibles.y
-                and self.Mario.y <= self.Ladrillos_Rompibles.y - self.Ladrillos_Rompibles.h
-
-            ):
+                self.Ladrillos_Rompibles.x <= self.Mario.x <= self.Ladrillos_Rompibles.x + self.Ladrillos_Rompibles.w
+                and self.Ladrillos_Rompibles.y <= self.Mario.y <= self.Ladrillos_Rompibles.y - self.Ladrillos_Rompibles.h):
             self.Mario.colisionar_abajo(self.Ladrillos_Rompibles.y)
 
         # Asi es como he hecho que el suelo sea colisionable
@@ -84,13 +99,12 @@ class App():
             ):
                 self.Mario.colisionar_arriba(item.y)
 
-        self.Poderes.update(self.Mario)
 
         self.goomba.update()  #Hay que hacer los setter para poder modificar la posicion del goomba
 
         #Con esto intento que si no está activa la moneda que se borre de la lista
         for item in self.Monedas:
-            item.update(self.Mario)
+            item.update_moneda(self.Mario)
 
         self.Incognita.update(self.Mario)
 
@@ -112,6 +126,11 @@ class App():
             if item.is_active:
                 item.draw()
 
+        for item in self.Poderes:
+            if item.is_active:
+                pyxel.blt(item.x, item.y, 0, item.sprite_x, item.sprite_y,
+                          item.w, item.h, 12)
+
         pyxel.blt(self.Ladrillos_Rompibles.x, self.Ladrillos_Rompibles.y, 0, self.Ladrillos_Rompibles.sprite_x,
                   self.Ladrillos_Rompibles.sprite_y, self.Ladrillos_Rompibles.w, self.Ladrillos_Rompibles.h, 12)
         pyxel.blt(self.Ladrillos_Irrompibles.x, self.Ladrillos_Irrompibles.y, 0, self.Ladrillos_Irrompibles.sprite_x,
@@ -119,5 +138,6 @@ class App():
         pyxel.blt(self.Incognita.x, self.Incognita.y, 0, self.Incognita.sprite_x,
                   self.Incognita.sprite_y, self.Incognita.w, self.Incognita.h, 12)
 
-        pyxel.blt(self.Poderes.x, self.Poderes.y, 0, self.Poderes.sprite_x, self.Poderes.sprite_y, self.Poderes.w, self.Poderes.h, 12)
+        pyxel.blt(self.Nubes.x, self.Nubes.y, 0, 139, 46, 62, 16, 12)
+
 App()

@@ -1,26 +1,41 @@
 class Poderes():
-    def __init__(self, posicion_x,posicion_y, activo):
-        self.Posicion_X = posicion_x
-        self.Posicion_Y = posicion_y
-        self.Activo = activo
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+        self.__w = 16
+        self.__h = 16
+        self.__tipo = 0
+        self.__is_active = True
+        self.__sprite_x = 0
+        self.__sprite_y = 45
 
-class Seta(Poderes):
-    def __init__(self, posicion_x, posicion_y, tipo):
-        super().__init__(posicion_x, posicion_y, tipo)
-        self.Tipo = tipo
-    def Crecer(self):
-        #Mario pequeño pasa a Super Mario
+    @property
+    def x(self):
+        return self.__x
 
-class Flor_Fuego(Poderes):
-    def __init__(self, posicion_x, posicion_y, tipo):
-        super().__init__(posicion_x, posicion_y, tipo)
-        self.Tipo = tipo
-    def (self):
-        #Super Mario se conveirte en Mario de fuego y lanza bolas de fuego.
+    @property
+    def y(self):
+        return self.__y
 
-class Estrella(Poderes):
-    def __init__(self, posicion_x, posicion_y, tipo):
-        super().__init__(posicion_x, posicion_y, tipo)
-        self.Tipo = tipo
-    def Invencible(self):
-        #Mario se vuelve invencible y mata lo que toca
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    @property
+    def sprite_x(self):
+        return self.__sprite_x
+
+    @property
+    def sprite_y(self):
+        return self.__sprite_y
+
+    @property
+    def is_activo(self):
+        return self.__is_active
+
+    def update(self):
+        self.__is_active = False

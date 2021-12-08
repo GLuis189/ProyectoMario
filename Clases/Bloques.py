@@ -1,40 +1,45 @@
 import pyxel
 
-
-class Bloque(object):
-    def __init__(self, posicion_x: int, posicion_y: int):
-        self.Posicion_X = posicion_x
-        self.Posicion_Y = posicion_y
-
-
-
-class Bloque_Rompibles(Bloque):
-    def __init__(self, posicion_x: int, posicion_y: int):
-        super().__init__(posicion_x, posicion_y)
-        self.Rompible = True
+class Bloque():
+    def __init__(self, x, y):
+        self.__x = x
+        self.__y = y
+        self.__w = 16
+        self.__h = 16
+        self.__is_activo = True
 
 
-class Bloque_Suelo(Bloque):
-    def __init__(self, posicion_x = 0, posicion_y = 20):
-        super().__init__(posicion_x, posicion_y)
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+
+    # No tiene mucho sentido este draw asiq si eso lo borramos luego
+    #def draw(self):
+     #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
+
+    def update(self, x, y):
+        if self.__is_activo:
+            self.__x = x
+            self.__y = y
+
+class Tuberia(Bloque):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.__x = x
+        self.__y = y
 
     def draw(self):
-        pyxel.blt(self.Posicion_X, self.Posicion_Y, 0, 0, 62, 15, 15)
-
-
-class Bloque_Irompibles(Bloque):
-    def __init__(self, posicion_x: int, posicion_y: int):
-        super().__init__(posicion_x, posicion_y)
-        self.Rompible = False
-    def draw(self):
-        pass
-
-
-class BLoque_Interrogacion(Bloque):
-    def __init__(self, posicion_x: int, posicion_y: int):
-        super().__init__(posicion_x, posicion_y)
-        self.Activado = False
-        self.Contenido = [0, [0, 1, 2]]
-    def draw(self):
-        pass
-
+        pyxel.blt(self.__x, self.__y, 0, )

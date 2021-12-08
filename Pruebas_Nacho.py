@@ -83,7 +83,7 @@ class Mario():
             #self.__q2 = 98
             #self.__w = self.__w
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
-        # Con self.__x if 128//2 == self.__x - self.__w hago que no se mueva si esta en la mitad
+
         if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
 
             self.__x = self.__x if 192 // 2 == self.__x - self.__w else max(0, self.__x + 2)
@@ -100,24 +100,24 @@ class Mario():
               #  self.__q2 = 98
             if self.__w < 0:
                 self.__w = -self.__w
-        #else:
-         #   self.__vx = 0
+        else:
+            self.__vx = 0
           #  if self.__vx == 0 and not self.Supermario:
            #     self.__q1 = 0
             #    self.__q2 = 98
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
-            #if self.encimadebloque == True:
-             #   self.encimadebloque = False
-            self.__vy = 1
-            self.__y -= self.__vy * 5  # la velocidad a la que salta
-            if self.__vy > 0 and not self.Supermario:
-                self.__q1 = 2
-                self.__q2 = 80
+            if self.encimadebloque == True:
+                self.encimadebloque = False
+                self.__vy = 1
+                self.__y -= self.__vy * 30  # la velocidad a la que salta
+            #if self.__vy > 0 and not self.Supermario:
+             #   self.__q1 = 2
+              #  self.__q2 = 80
 
-            elif self.__vy > 0 and self.Supermario:
-                self.__q1 = 146
-                self.__q2 = 80
+            #elif self.__vy > 0 and self.Supermario:
+             #   self.__q1 = 146
+              #  self.__q2 = 80
 
         else:
             self.__vy = 0
@@ -266,6 +266,8 @@ class App():
     def update(self):
 
         self.Mario.update()
+
+        # coger Seta
         if (self.Mario.x + abs(self.Mario.w) >= self.Seta.x and self.Mario.x <= self.Seta.x + self.Seta.w
                 and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
             self.Seta.update()
@@ -307,7 +309,7 @@ class App():
         pyxel.cls(6)
 
         self.Mario.draw()
-        if self.Seta.is_activo == True:
+        if self.Seta.is_activo:
             pyxel.blt(self.Seta.x, self.Seta.y, 0, self.Seta.sprite_x, self.Seta.sprite_y, self.Seta.w, self.Seta.h, 12)
 
         #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista

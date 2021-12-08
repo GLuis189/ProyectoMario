@@ -1,24 +1,103 @@
 import pyxel
-
-import Mario
-import Nivel as Nv
-
-
+import random
+from Bloques import Bloque
+from Mario import Mario
+from Enemigos import Enemigos
+from Poderes import Poderes
 class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
-        pyxel.load("assets/mario_assets.pyxres")
+        pyxel.load("mario_assets.pyxres")
+        self.Suelo = self.__crear_suelo(48)  # Con esta función creas el suelo
+        self.Mario = Mario()
+        self.Seta = Poderes(100, 60)
+        self.BLoques = self.crearBloquesIrrompibles()
+
+
+
+        pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
-        self.__nivel = Nv
 
+    def __crear_suelo(self, num_suelo):  # Se crea una lista llenas de los bloques q conforman el suelo
+        bloques = []
+        cont = 0
+        for i in range(num_suelo):
+            cont += 1
+            if cont < 16 or cont > 19:
+                bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+        return bloques
 
+    def crearBloquesIrrompibles(self):
+        bloques = [Bloque(192, 96), Bloque(208, 96), Bloque(224, 96), Bloque(208, 80), Bloque(224, 80), Bloque(224, 64), Bloque(304, 96)]
+
+                            # mete los bloques del mapa de forma aleatoria, cuando diseñemos el mapa quitamos que sea aleatorio
+        return bloques
+    def crearTuberias(self):
+        bloques = []
+        return bloques
+    def crearBloquesRompibles(self):
+        bloques = [Bloque(112, 80), Bloque(128, 80)]
+        return bloques
+    def crearInterrogacion(self):
+        bloques = [Bloque(160, 80)]
+        return bloques
 #Luego crearemos update y draw
     def update(self):
-        pass
+
+        self.Mario.update()
+
+        # coger Seta
+        if (self.Mario.x + abs(self.Mario.w) >= self.Seta.x and self.Mario.x <= self.Seta.x + self.Seta.w
+                and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
+            self.Seta.update()
+            self.Mario.CogerSeta()
+
+        for item in self.BLoques:
+            # colision por arriba con los bloques
+            if self.Mario.y < item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+
+                    self.Mario.colisionarArriba(item.y)
+            # colision por abajo con los bloques
+            elif self.Mario.y > item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+
+                    self.Mario.colisionarAbajo(item.y)
+        # colision con el suelo
+        for item in self.Suelo:
+            # item.update(self.Mario)
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+
+                self.Mario.colisionarArriba(item.y)
+
+        #for item in self.Suelo:
+         #   item.update(self.Mario)
+
+        while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
+
+
+            for item in self.Suelo:
+                item.update(item.x - 0.7, item.y)
+            for item in self.BLoques:
+                item.update(item.x - 0.7, item.y)
+
+            break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):
         pyxel.cls(6)
-        Nv.draw
 
+        self.Mario.draw()
+        if self.Seta.is_activo:
+            pyxel.blt(self.Seta.x, self.Seta.y, 0, self.Seta.sprite_x, self.Seta.sprite_y, self.Seta.w, self.Seta.h, 12)
 
+        #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+
+        for item in self.BLoques:
+            pyxel.blt(item.x, item.y, 0, 0, 62, 16, 16, 12)
+        for item in self.Suelo:
+            pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
+        #pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

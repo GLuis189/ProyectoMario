@@ -35,11 +35,17 @@ class Bloque():
             self.__x = x
             self.__y = y
 
-class Tuberia(Bloque):
+class BloqueRompible(Bloque):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.__x = x
         self.__y = y
 
-    def draw(self):
-        pyxel.blt(self.__x, self.__y, 0, )
+class BloqueInterrogacion(Bloque):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.__x = x
+        self.__y = y
+
+
+

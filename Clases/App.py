@@ -42,7 +42,7 @@ class App():
         bloques = [Bloque(112, 48), Bloque(128, 48), Bloque(352, 64), Bloque(368, 64), Bloque(384, 64), Bloque(352, 10), Bloque(624, 64), Bloque(640, 64)]
         return bloques
     def crearInterrogacion(self):
-        bloques = [Bloque(160, 48), Bloque(368, 10)]
+        bloques = [Bloque(166, 48), Bloque(368, 10)]
         return bloques
 
 #Luego crearemos update y draw
@@ -140,15 +140,15 @@ class App():
 
         while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
             for item in self.BloquesRompibles:
-                item.update(item.x - 0.7, item.y)
+                item.update(item.x - 1, item.y)
             for item in self.BloquesInterrogacion:
-                item.update(item.x - 0.7, item.y)
+                item.update(item.x - 1, item.y)
             for item in self.tuberias:
-                item.update(item.x - 0.7, item.y)
+                item.update(item.x - 1, item.y)
             for item in self.Suelo:
-                item.update(item.x - 0.7, item.y)
+                item.update(item.x - 1, item.y)
             for item in self.BLoquesIrrompibles:
-                item.update(item.x - 0.7, item.y)
+                item.update(item.x - 1, item.y)
 
             break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 

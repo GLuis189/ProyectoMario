@@ -1,8 +1,5 @@
-from Clases1.mario import Mario
-
-
-class Poder():
-    def __init__(self, x, y, ):
+class Poderes():
+    def __init__(self, x, y):
         self.__x = x
         self.__y = y
         self.__w = 16
@@ -37,22 +34,8 @@ class Poder():
         return self.__sprite_y
 
     @property
-    def is_active(self):
+    def is_activo(self):
         return self.__is_active
 
-    def update(self, mario: Mario):
-        if mario.Super_Mario or mario.Mario_Fuego:
-            self.__tipo = 1
-        if self.__tipo == 1:
-            self.__sprite_x = 55
-            self.__sprite_y = 46
-
-    def tocar_mario(self, mario: Mario):
-        if self.__tipo == 0:
-          mario.tocar_poder(0)
-        if self.__tipo == 1:
-            mario.tocar_poder(1)
+    def update(self):
         self.__is_active = False
-
-
-

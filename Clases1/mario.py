@@ -34,7 +34,7 @@ class Mario():
         return self.__Mario_Fuego
 
     @property
-    def n_vidas(self):
+    def Vidas(self):
         return self.__Vidas
 
     @property
@@ -47,6 +47,7 @@ class Mario():
         self.__w = 14
         self.__h = 16
         self.__vy = 0
+        self.__Saltar = False
 
         self.__Vidas = 3
         self.__is_alive = True
@@ -77,10 +78,11 @@ class Mario():
 
 
         # Al pulsar el espacio el mario salta
-        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP) and self.__y - self.__vy * 5 <= 100:
-            if self.__y - self.__vy * 5 > 10:
+        if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
+            if self.__Saltar:
+                self.Saltar = False
                 self.__vy = 1
-                self.__y -= self.__vy * 5  # la velocidad a la que salta
+                self.__y -= self.__vy * 30  # la velocidad a la que salta
 
          # con esto el mario deja de tener gravedad a la altura del suelo y asi no sigue bajando hasta la mitad del bloque
 
@@ -110,6 +112,7 @@ class Mario():
     def colisionar_arriba(self, y_bloque):
         self.__y = y_bloque - self.__h
         self.__vy = 0
+        self.Saltar = True
 
     def colisionar_abajo(self, y_bloque):
         self.__y = y_bloque - self.__h

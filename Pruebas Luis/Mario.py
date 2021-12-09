@@ -43,6 +43,7 @@ class Mario():
         self.__Super_Mario = False
         self.__Mario_Fuego = False
 
+#
     def update(self):
         # Hay que hacer lo del visor para que a la izq se pare
         # Al pulsar A o <- el mario se mueve a la izq

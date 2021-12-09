@@ -8,3 +8,16 @@ _Tablero:
     Enemigo - Lista de enemigos
     Mario - Clase
     Montañas - Lista de montaña - Montaña - Clase
+
+
+Hacer las comprobaciones en los métodos públicos y en los constructores
+
+Hay que buscar hacer que tenga menor impacto posible
+
+Primero crear _todo como privado y luego ir haciendo publico poco a poco.
+
+Crar un archivo que sea una clase Draw con la funcion de dibujar el objeto que se le pasa como parámetro
+
+Una clase solo puede tener una función
+
+Baja cohesion y alta coherencia

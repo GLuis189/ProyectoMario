@@ -1,5 +1,3 @@
-import pyxel
-
 class Bloque():
     def __init__(self, x, y):
         self.__x = x
@@ -25,27 +23,12 @@ class Bloque():
     def h(self):
         return self.__h
 
-
-    # No tiene mucho sentido este draw asiq si eso lo borramos luego
-    #def draw(self):
-     #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
-
     def update(self, x, y):
         if self.__is_activo:
             self.__x = x
             self.__y = y
 
-class BloqueRompible(Bloque):
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.__x = x
-        self.__y = y
 
-class BloqueInterrogacion(Bloque):
-    def __init__(self, x, y):
-        super().__init__(x, y)
-        self.__x = x
-        self.__y = y
 
 
 

@@ -25,6 +25,14 @@ class Mario():
     def h(self):
         return self.__h
 
+    @property
+    def q1(self):
+        return self.__q1
+
+    @property
+    def q2(self):
+        return self.__q2
+
 
     def __reset(self):
         self.__x = 20
@@ -130,15 +138,7 @@ class Mario():
         activo = True
 
 
-    def draw(self):
-        pyxel.blt(self.__x,
-                  self.__y,
-                  0,
-                  self.__q1,
-                  self.__q2,
-                  self.__w,
-                  self.__h,
-                  12)
+
 
 
 

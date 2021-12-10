@@ -6,8 +6,15 @@ class Tuberia(Bloque):
         super().__init__(x, y)
         self.__x = x
         self.__y = y
-        self.__w = 31
+        self.__w = 32
         self.__h = 47
 
-    def draw(self):
-        pyxel.blt(self.__x, self.__y, 0, 79, 178, 31, 47, 12)
+
+
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h

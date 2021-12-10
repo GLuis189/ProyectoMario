@@ -4,8 +4,12 @@ from Bloques import Bloque
 from tuberia import Tuberia
 from interrogacion import BloqueInterrogacion
 from Mario import Mario
+from BloqueIrrompible import BloqueIrrompible
+from BloqueRompible import BloqueRompible
 #from Enemigos import Enemigos
 from Poderes import Poderes
+from Draw import Draw
+
 class App():
     def __init__(self):
         pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
@@ -15,6 +19,7 @@ class App():
         self.BloquesRompibles = self.crearBloquesRompibles()
         self.BloquesInterrogacion = self.crearInterrogacion()
         self.Mario = Mario()
+        self.Dibujar = Draw()
         self.Seta = Poderes(100, 60)
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
 
@@ -33,16 +38,16 @@ class App():
         return bloques
 
     def crearBloquesIrrompibles(self):
-        bloques = [Bloque(192, 96), Bloque(208, 96), Bloque(224, 96), Bloque(208, 80), Bloque(224, 80), Bloque(224, 64), Bloque(304, 96), Bloque(704, 96), Bloque(704, 80), Bloque(704, 64), Bloque(688, 48), Bloque(704, 48)]
+        bloques = [BloqueIrrompible(192, 96), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(208, 80), BloqueIrrompible(224, 80), BloqueIrrompible(224, 64), BloqueIrrompible(304, 96), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(704, 64), BloqueIrrompible(688, 48), BloqueIrrompible(704, 48)]
         return bloques
     def crearTuberias(self):
         bloques = [Tuberia(432, 96), Tuberia(544, 66)]
         return bloques
     def crearBloquesRompibles(self):
-        bloques = [Bloque(112, 48), Bloque(128, 48), Bloque(352, 64), Bloque(368, 64), Bloque(384, 64), Bloque(352, 10), Bloque(624, 64), Bloque(640, 64)]
+        bloques = [BloqueRompible(112, 48), BloqueRompible(128, 48), BloqueRompible(352, 64), BloqueRompible(368, 64), BloqueRompible(384, 64), BloqueRompible(352, 10), BloqueRompible(624, 64), BloqueRompible(640, 64)]
         return bloques
     def crearInterrogacion(self):
-        bloques = [Bloque(166, 48), Bloque(368, 10)]
+        bloques = [BloqueInterrogacion(166, 48), BloqueInterrogacion(368, 10)]
         return bloques
 
 #Luego crearemos update y draw
@@ -155,20 +160,20 @@ class App():
     def draw(self):
         pyxel.cls(6)
 
-        self.Mario.draw()
+        self.Dibujar.drawMario(self.Mario)
         if self.Seta.is_activo:
-            pyxel.blt(self.Seta.x, self.Seta.y, 0, self.Seta.sprite_x, self.Seta.sprite_y, self.Seta.w, self.Seta.h, 12)
+            self.Dibujar.DrawPoderes(self.Seta)
 
         #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.BloquesRompibles:
-            pyxel.blt(item.x, item.y, 0, 160, 200, 16, 16, 12)
+            self.Dibujar.DrawBLoqueRompible(item)
         for item in self.BloquesInterrogacion:
-            pyxel.blt(item.x, item.y, 0, 177, 27, 16, 16, 12)
+            self.Dibujar.DrawBloqueInterrogacion(item)
         for item in self.BLoquesIrrompibles:
-            pyxel.blt(item.x, item.y, 0, 0, 62, 16, 16, 12)
+            self.Dibujar.DrawBloquesIrrompibles(item)
         for item in self.tuberias:
-            pyxel.blt(item.x, item.y, 0, 79, 178, 32, 47, 12)
+            self.Dibujar.DrawTuberias(item)
         for item in self.Suelo:
-            pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
-        #pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
+            self.Dibujar.DrawBloquesSuelo(item)
+
 App()

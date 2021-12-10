@@ -160,7 +160,7 @@ class App():
     def draw(self):
         pyxel.cls(6)
 
-        self.Dibujar.drawMario(self.Mario)
+        self.Dibujar.DrawMario(self.Mario)
         if self.Seta.is_activo:
             self.Dibujar.DrawPoderes(self.Seta)
 
@@ -175,5 +175,10 @@ class App():
             self.Dibujar.DrawTuberias(item)
         for item in self.Suelo:
             self.Dibujar.DrawBloquesSuelo(item)
+        s = "MARIO\n{:>0000006}".format(self.Mario.score)
+        self.Dibujar.DrawScore(s)
+        m = "X {:>02}".format(self.Mario.monedas)
+        self.Dibujar.DrawMonedas(m)
+
 
 App()

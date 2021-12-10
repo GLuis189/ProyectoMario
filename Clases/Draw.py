@@ -7,7 +7,7 @@ from BloqueIrrompible import BloqueIrrompible
 from Poderes import Poderes
 import pyxel
 class Draw():
-    def drawMario(self, Mario: Mario):
+    def DrawMario(self, Mario: Mario):
         pyxel.blt(Mario.x,
                   Mario.y,
                   0,
@@ -33,3 +33,10 @@ class Draw():
 
     def DrawPoderes(self, Poderes: Poderes):
         pyxel.blt(Poderes.x, Poderes.y, 0, Poderes.sprite_x, Poderes.sprite_y, Poderes.w, Poderes.h, 12)
+
+    def DrawScore(self, score):
+        pyxel.text(4, 4, score, 7)
+
+    def DrawMonedas(self, monedas):
+        pyxel.blt(50, 2, 0, 81, 16, 5, 8, 12)
+        pyxel.text(56, 4, monedas, 7)

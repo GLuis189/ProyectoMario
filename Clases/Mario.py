@@ -33,6 +33,13 @@ class Mario():
     def q2(self):
         return self.__q2
 
+    @property
+    def score(self):
+        return self.__score
+
+    @property
+    def monedas(self):
+        return self.__monedas
 
     def __reset(self):
         self.__x = 20
@@ -43,6 +50,8 @@ class Mario():
         self.__vx = 0
         self.__q1 = 2
         self.__q2 = 98
+        self.__score = 0
+        self.__monedas = 0
         self.encimadebloque = False
         self.Supermario = False
 

@@ -1,13 +1,13 @@
 import pyxel
-#import random
+
 from Bloques import Bloque
-from tuberia import Tuberia
+from Tuberia import Tuberia
 from Mario import Mario
-#from Enemigos import Enemigos
+
 from Poderes import Poderes
 class App():
     def __init__(self):
-        pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
+        pyxel.init(192, 144, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets_L.pyxres")
         self.Suelo = self.__crear_suelo(56)  # Con esta función creas el suelo
         self.tuberias = self.crearTuberias()
@@ -27,19 +27,19 @@ class App():
         for i in range(num_suelo):
             cont += 1
             if cont < 16 or cont > 19:
-                bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+                bloques.append(Bloque(16 * i, 128))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
 
     def crearBloquesIrrompibles(self):
-        bloques = [Bloque(192, 96), Bloque(208, 96), Bloque(224, 96), Bloque(208, 80), Bloque(224, 80), Bloque(224, 64),
-                   Bloque(304, 96), Bloque(704, 96), Bloque(704, 80), Bloque(704, 64), Bloque(688, 48), Bloque(704, 48)]
+        bloques = [Bloque(192, 112), Bloque(208, 112), Bloque(224, 112), Bloque(208, 96), Bloque(224, 96), Bloque(224, 80),
+                   Bloque(304, 112), Bloque(704, 112), Bloque(704, 96), Bloque(704, 64), Bloque(688, 64), Bloque(704, 64)]
         return bloques
     def crearTuberias(self):
-        bloques = [Tuberia(432, 96), Tuberia(544, 66)]
+        bloques = [Tuberia(432, 112), Tuberia(544, 84)]
         return bloques
     def crearBloquesRompibles(self):
-        bloques = [Bloque(112, 48), Bloque(128, 48), Bloque(352, 64), Bloque(368, 64), Bloque(384, 64), Bloque(352, 10),
-                   Bloque(624, 64), Bloque(640, 64)]
+        bloques = [Bloque(112, 64), Bloque(128, 48), Bloque(352, 64), Bloque(368, 64), Bloque(384, 64), Bloque(352, 10),
+                   Bloque(624, 84), Bloque(640, 64)]
         return bloques
     def crearInterrogacion(self):
         bloques = [Bloque(160, 48), Bloque(368, 10)]

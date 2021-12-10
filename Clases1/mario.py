@@ -141,4 +141,4 @@ class Mario():
         if self.__Super_Mario:
             pyxel.blt(self.__x, self.__y, 0, self.__sprite_x, self.__sprite_y, self.__w, self.__h, 12)
         if self.__Mario_Fuego:
-            pyxel.blt(self.__x, self.__y, self.__sprite_x, self.__sprite_y, self.__w, self.__h, 12)
+            pyxel.blt(self.__x, self.__y, 0,self.__sprite_x, self.__sprite_y, self.__w, self.__h, 12)

@@ -140,13 +140,17 @@ class Mario():
     def colisionarDrch(self, x):
         self.__x = x + self.__w
 
-    def CogerSeta(self):
+    def CogerPoder(self):
         self.Supermario = True
 
     def activarinterrogacion(self):
         activo = True
 
+    def cogerMoneda(self):
+        self.__monedas += 1
 
+    def activarBloqueI(self, x):
+        self.colisionarAbajo(x)
 
 
 

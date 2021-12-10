@@ -6,13 +6,14 @@ from interrogacion import BloqueInterrogacion
 from Mario import Mario
 from BloqueIrrompible import BloqueIrrompible
 from BloqueRompible import BloqueRompible
+from moneda import Moneda
 #from Enemigos import Enemigos
 from Poderes import Poderes
 from Draw import Draw
 
 class App():
     def __init__(self):
-        pyxel.init(192, 128, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
+        pyxel.init(192, 144, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
         self.Suelo = self.__crear_suelo(56)  # Con esta función creas el suelo
         self.tuberias = self.crearTuberias()
@@ -20,9 +21,10 @@ class App():
         self.BloquesInterrogacion = self.crearInterrogacion()
         self.Mario = Mario()
         self.Dibujar = Draw()
-        self.Seta = Poderes(100, 60)
+        self.Poderes = self.crearPoderes()
+        self.Monedas = self.crearMonedas()
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
-
+        self.time = 0
 
 
         pyxel.playm(0, loop=True)
@@ -34,34 +36,52 @@ class App():
         for i in range(num_suelo):
             cont += 1
             if cont < 16 or cont > 19:
-                bloques.append(Bloque(16 * i, 128 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
+                bloques.append(Bloque(16 * i, 144 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
 
     def crearBloquesIrrompibles(self):
-        bloques = [BloqueIrrompible(192, 96), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(208, 80), BloqueIrrompible(224, 80), BloqueIrrompible(224, 64), BloqueIrrompible(304, 96), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(704, 64), BloqueIrrompible(688, 48), BloqueIrrompible(704, 48)]
+        bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(688, 64), BloqueIrrompible(704, 64)]
         return bloques
     def crearTuberias(self):
-        bloques = [Tuberia(432, 96), Tuberia(544, 66)]
+        bloques = [Tuberia(432, 112), Tuberia(544, 82)]
         return bloques
     def crearBloquesRompibles(self):
-        bloques = [BloqueRompible(112, 48), BloqueRompible(128, 48), BloqueRompible(352, 64), BloqueRompible(368, 64), BloqueRompible(384, 64), BloqueRompible(352, 10), BloqueRompible(624, 64), BloqueRompible(640, 64)]
+        bloques = [BloqueRompible(112, 64), BloqueRompible(128, 64), BloqueRompible(352, 80), BloqueRompible(368, 80), BloqueRompible(384, 80), BloqueRompible(352, 26), BloqueRompible(624, 80), BloqueRompible(640, 80)]
         return bloques
     def crearInterrogacion(self):
-        bloques = [BloqueInterrogacion(166, 48), BloqueInterrogacion(368, 10)]
+        bloques = [BloqueInterrogacion(166, 64), BloqueInterrogacion(368, 26)]
         return bloques
+    def crearMonedas(self):
+        monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(704, 44), Moneda(685, 108)]
+        return monedas
+    def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
+        poderes = []
+        for item in range(len(self.BloquesInterrogacion)):
+            if self.BloquesInterrogacion[item].recompensa:
+                poderes.append(Poderes(self.BloquesInterrogacion[item].x, self.BloquesInterrogacion[item].y - 16, 0))  # esto hace q la seta o el poder aparezca encima
+                poderes[item].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
+
+        return poderes
+
 
 #Luego crearemos update y draw
     def update(self):
 
         self.Mario.update()
 
-        # coger Seta
-
-        if (self.Mario.x + abs(self.Mario.w) >= self.Seta.x and self.Mario.x <= self.Seta.x + self.Seta.w
-                and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
-            self.Seta.update()
-            self.Mario.CogerSeta()
-
+        # coger Poderes
+        for item in self.Poderes:
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                self.Poderes.remove(item)
+                self.Mario.CogerPoder()
+        #coger moneda
+        for item in self.Monedas:
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                self.Mario.cogerMoneda()
+                self.Monedas.remove(item)
+                item.CogerMoneda()
         for item in self.BLoquesIrrompibles:
             # colision por arriba con los bloques irompibles
 
@@ -114,11 +134,14 @@ class App():
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarArriba(item.y)
+
             # colision por abajo con los bloques interrogacion
             elif self.Mario.y > item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarAbajo(item.y)
+                    item.romper()
+
 
         for item in self.tuberias:
             # colision por arriba con los tuberias
@@ -154,15 +177,18 @@ class App():
                 item.update(item.x - 1, item.y)
             for item in self.BLoquesIrrompibles:
                 item.update(item.x - 1, item.y)
+            for item in self.Monedas:
+                item.update(item.x - 1, item.y)
+            for item in self.Poderes:
+                item.update(item.x - 1, item.y)
 
             break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
-
+        self.time += 1
     def draw(self):
         pyxel.cls(6)
 
         self.Dibujar.DrawMario(self.Mario)
-        if self.Seta.is_activo:
-            self.Dibujar.DrawPoderes(self.Seta)
+
 
         #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.BloquesRompibles:
@@ -175,10 +201,19 @@ class App():
             self.Dibujar.DrawTuberias(item)
         for item in self.Suelo:
             self.Dibujar.DrawBloquesSuelo(item)
+        for item in self.Monedas:
+            if Moneda.is_active:
+                self.Dibujar.DrawMoneda(item)
+        for item in self.Poderes:
+            if item.is_activo:
+                self.Dibujar.DrawPoderes(item)
         s = "MARIO\n{:>0000006}".format(self.Mario.score)
         self.Dibujar.DrawScore(s)
         m = "X {:>02}".format(self.Mario.monedas)
         self.Dibujar.DrawMonedas(m)
+        self.Dibujar.DrawMundo()
+        t = "TIME\n {:<300}".format(self.time)
+        self.Dibujar.DrawTime(t)
 
 
 App()

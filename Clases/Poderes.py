@@ -1,13 +1,17 @@
 class Poderes():
-    def __init__(self, x, y):
+    def __init__(self, x, y, tipo):
         self.__x = x
         self.__y = y
         self.__w = 16
         self.__h = 16
-        self.__tipo = 0
-        self.__is_active = True
-        self.__sprite_x = 0
-        self.__sprite_y = 45
+        self.__tipo = tipo
+        self.__is_active = False
+        if self.__tipo == 0:
+            self.__sprite_x = 0
+            self.__sprite_y = 45
+        elif self.__tipo == 1:
+            self.__sprite_x = 55
+            self.__sprite_y = 47
 
     @property
     def x(self):
@@ -37,5 +41,12 @@ class Poderes():
     def is_activo(self):
         return self.__is_active
 
-    def update(self):
+    def coger(self):
         self.__is_active = False
+
+    def aparecer(self):
+        self.__is_active = True
+
+    def update(self, x, y):
+        self.__x = x
+        self.__y = y

@@ -3,7 +3,8 @@ import pyxel
 from Bloques import Bloque
 from Tuberia import Tuberia
 from Mario import Mario
-
+from Goomba import Goomba
+from Koopa_Troopa import Koopa_Troopa
 from Poderes import Poderes
 class App():
     def __init__(self):
@@ -16,7 +17,8 @@ class App():
         self.Mario = Mario()
         self.Seta = Poderes(100, 60)
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
-
+        self.Goombas = self.crearGoombas()
+        self.KoopaTropas = self.crearKoopaTropa()
 
 
         pyxel.run(self.update, self.draw)
@@ -44,7 +46,12 @@ class App():
     def crearInterrogacion(self):
         bloques = [Bloque(160, 48), Bloque(368, 10)]
         return bloques
-
+    def crearGoombas(self):
+        goombas = [Goomba(182, 112), Goomba(416, 112)]
+        return goombas
+    def crearKoopaTropa(self):
+        koopatropa = [Koopa_Troopa(416, 112)]
+        return koopatropa
 #Luego crearemos update y draw
     def update(self):
 
@@ -55,6 +62,9 @@ class App():
                 and self.Mario.y + self.Mario.h >= self.Seta.y and self.Mario.y <= self.Seta.y + self.Seta.h):
             self.Seta.update()
             self.Mario.CogerSeta()
+
+        for item in self.Goombas:
+            item.update(self.Mario)
 
         for item in self.BLoquesIrrompibles:
             # colision por arriba con los bloques irompibles
@@ -148,6 +158,8 @@ class App():
             for item in self.BLoquesIrrompibles:
                 item.update(item.x - 1.4, item.y)
 
+
+
               # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
 
     def draw(self):
@@ -157,7 +169,7 @@ class App():
         if self.Seta.is_activo:
             pyxel.blt(self.Seta.x, self.Seta.y, 0, self.Seta.sprite_x, self.Seta.sprite_y, self.Seta.w, self.Seta.h, 12)
 
-        #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+        #  Hay que dibujar los bloques y así se dibujan ya q eswtan dentro de una lista
         for item in self.BloquesRompibles:
             pyxel.blt(item.x, item.y, 0, 160, 200, 16, 16, 12)
         for item in self.BloquesInterrogacion:
@@ -168,5 +180,11 @@ class App():
             pyxel.blt(item.x, item.y, 0, 79, 178, 32, 47, 12)
         for item in self.Suelo:
             pyxel.blt(item.x, item.y, 0, 0, 227, item.w, item.h, 12)
+        for item in self.Goombas:
+            pyxel.blt(item.x, item.y, 1, 32, 0, item.w, 16, 12)
+        for item in self.KoopaTropas:
+            pyxel.blt(item.x, item.y, 1, item.sprite_x, item.sprite_y, item.w, item.h, 12)
+
+
         #pyxel.bltm(0, 0, 0, self.fondo.fondo_u, self.fondo.fondo_v, 7, 2, 12)  # esta funcion bltm se refiere al tilemap para dibujar el fondo pero no se como va. para q se vea q se mueve poner blt
 App()

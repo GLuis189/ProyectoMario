@@ -7,7 +7,8 @@ from Mario import Mario
 from BloqueIrrompible import BloqueIrrompible
 from BloqueRompible import BloqueRompible
 from moneda import Moneda
-#from Enemigos import Enemigos
+from Goomba import Goomba
+from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
 
@@ -24,6 +25,7 @@ class App():
         self.Poderes = self.crearPoderes()
         self.Monedas = self.crearMonedas()
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
+        self.Enemigos = self.crearEnemigos()
         self.time = 0
 
 
@@ -62,6 +64,8 @@ class App():
                 poderes[item].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
 
         return poderes
+    def crearEnemigos(self):
+        enemigos = [Goomba(182, 94), Goomba(30, 30), KoopaTroopa(50, 50)]
 
 
 #Luego crearemos update y draw

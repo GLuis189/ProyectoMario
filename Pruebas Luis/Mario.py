@@ -93,9 +93,9 @@ class Mario():
         # Al pulsar el espacio el mario salta
         if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
             #if self.encimadebloque == True:
-                #self.encimadebloque = False
-            self.__vy = 1
-            self.__y -= self.__vy * 5  # la velocidad a la que salta
+             #   self.encimadebloque = False
+            self.__vy = -1
+            self.__y += self.__vy * 5  # la velocidad a la que salta
             if self.__vy > 0 and not self.Supermario:
                 self.__q1 = 2
                 self.__q2 = 80

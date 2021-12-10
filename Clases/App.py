@@ -7,10 +7,12 @@ from Mario import Mario
 from BloqueIrrompible import BloqueIrrompible
 from BloqueRompible import BloqueRompible
 from moneda import Moneda
-from Goomba import Goomba
-from KoopaTroopa import KoopaTroopa
+#from Goomba import Goomba
+#from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
+from Nubes import Nube
+from Montanas import Montana
 
 class App():
     def __init__(self):
@@ -26,7 +28,9 @@ class App():
         self.Monedas = self.crearMonedas()
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
         self.Enemigos = self.crearEnemigos()
-        self.time = 0
+        self.Nubes = self.crearNubes()
+        self.Montanas = self.crearMontanas()
+        self.time = 300
 
 
         pyxel.playm(0, loop=True)
@@ -65,8 +69,14 @@ class App():
 
         return poderes
     def crearEnemigos(self):
-        enemigos = [Goomba(182, 94), Goomba(30, 30), KoopaTroopa(50, 50)]
-
+        enemigos = []
+        return enemigos
+    def crearNubes(self):
+        nubes = [Nube(10, 32), Nube(180, 16), Nube(270, 32), Nube(340, 26)]
+        return nubes
+    def crearMontanas(self):
+        montana = [Montana(0,0), Montana(0,0), Montana(0,0)]
+        return montana
 
 #Luego crearemos update y draw
     def update(self):
@@ -185,16 +195,17 @@ class App():
                 item.update(item.x - 1, item.y)
             for item in self.Poderes:
                 item.update(item.x - 1, item.y)
+            for item in self.Nubes:
+                item.update(item.x - 1, item.y)
 
             break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
         self.time += 1
     def draw(self):
         pyxel.cls(6)
 
-        self.Dibujar.DrawMario(self.Mario)
-
-
         #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+        for item in self.Nubes:
+            self.Dibujar.DrawNube(item)
         for item in self.BloquesRompibles:
             self.Dibujar.DrawBLoqueRompible(item)
         for item in self.BloquesInterrogacion:
@@ -211,6 +222,12 @@ class App():
         for item in self.Poderes:
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)
+
+        #for item in self.Montanas:
+         #   self.Dibujar.DrawMontana(item)
+
+        self.Dibujar.DrawMario(self.Mario)
+
         s = "MARIO\n{:>0000006}".format(self.Mario.score)
         self.Dibujar.DrawScore(s)
         m = "X {:>02}".format(self.Mario.monedas)

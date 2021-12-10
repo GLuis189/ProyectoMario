@@ -6,7 +6,11 @@ from interrogacion import BloqueInterrogacion
 from BloqueIrrompible import BloqueIrrompible
 from Poderes import Poderes
 from moneda import Moneda
+from Nubes import Nube
+from Montanas import Montana
 import pyxel
+
+
 class Draw():
     def DrawMario(self, Mario: Mario):
         pyxel.blt(Mario.x,
@@ -54,3 +58,9 @@ class Draw():
 
     def DrawMoneda(self, moneda: Moneda):
         pyxel.blt(moneda.x, moneda.y, 0, 2, 29, moneda.w, moneda.h, 12)
+
+    def DrawNube(self, nube: Nube):
+        pyxel.blt(nube.x, nube.y, 0, 108, 139, 46, 21, 12)
+
+    def DrawMontana(self, montana: Montana):
+        pyxel.blt(montana.x, montana.y, 0, 139, 48, 62, 16, 12)

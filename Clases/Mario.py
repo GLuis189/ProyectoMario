@@ -41,6 +41,10 @@ class Mario():
     def monedas(self):
         return self.__monedas
 
+    @property
+    def Vidas(self):
+        return self.__Vidas
+
     def __reset(self):
         self.__x = 20
         self.__y = 64
@@ -54,7 +58,7 @@ class Mario():
         self.__monedas = 0
         self.encimadebloque = False
         self.Supermario = False
-
+        self.__Vidas = 3
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False

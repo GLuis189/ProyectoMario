@@ -31,9 +31,8 @@ class App():
         self.Nubes = self.crearNubes()
         self.Montanas = self.crearMontanas()
         self.time = 300
+        self.GameOver = False
 
-
-        pyxel.playm(0, loop=True)
         pyxel.run(self.update, self.draw)
 
     def __crear_suelo(self, num_suelo):  # Se crea una lista llenas de los bloques q conforman el suelo
@@ -72,10 +71,10 @@ class App():
         enemigos = []
         return enemigos
     def crearNubes(self):
-        nubes = [Nube(10, 32), Nube(180, 16), Nube(270, 32), Nube(340, 26)]
+        nubes = [Nube(10, 32), Nube(180, 16), Nube(290, 32), Nube(420, 26), Nube(560, 16), Nube(710, 16)]
         return nubes
     def crearMontanas(self):
-        montana = [Montana(0,0), Montana(0,0), Montana(0,0)]
+        montana = [Montana(0,83), Montana(440,83), Montana(628,83)]
         return montana
 
 #Luego crearemos update y draw
@@ -177,35 +176,45 @@ class App():
 
                 self.Mario.colisionarArriba(item.y)
 
-        #for item in self.Suelo:
-         #   item.update(self.Mario)
-
-        while self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
+        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
             for item in self.BloquesRompibles:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.BloquesInterrogacion:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.tuberias:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.Suelo:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.BLoquesIrrompibles:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.Monedas:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.Poderes:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
             for item in self.Nubes:
-                item.update(item.x - 1, item.y)
+                item.update(item.x - 1.4, item.y)
+            for item in self.Montanas:
+                item.update(item.x - 1.4, item.y)
 
-            break  # me he dado cuenta q algo hago mal con los while pq me peta el juego, si pongo un break no asique no se
-        self.time += 1
+        # El tiempo se va reduciedo cada vez que pasa 1 segundo (fps%60=0) y si el tiempo se acaba se pierde.
+        if self.time > 0:
+            if pyxel.frame_count % 60 == 0:
+                self.time -= 1
+        else:
+            self.GameOver = True
+
+        # Si Mario pierde las vidas se pierde.
+        if self.Mario.Vidas <= 0:
+            self.GameOver = True
+
     def draw(self):
         pyxel.cls(6)
 
         #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
         for item in self.Nubes:
             self.Dibujar.DrawNube(item)
+        for item in self.Montanas:
+            self.Dibujar.DrawMontana(item)
         for item in self.BloquesRompibles:
             self.Dibujar.DrawBLoqueRompible(item)
         for item in self.BloquesInterrogacion:
@@ -223,9 +232,6 @@ class App():
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)
 
-        #for item in self.Montanas:
-         #   self.Dibujar.DrawMontana(item)
-
         self.Dibujar.DrawMario(self.Mario)
 
         s = "MARIO\n{:>0000006}".format(self.Mario.score)
@@ -233,8 +239,11 @@ class App():
         m = "X {:>02}".format(self.Mario.monedas)
         self.Dibujar.DrawMonedas(m)
         self.Dibujar.DrawMundo()
-        t = "TIME\n {:<300}".format(self.time)
+        t = "TIME\n {}".format(self.time)
         self.Dibujar.DrawTime(t)
+
+        if self.GameOver:
+            self.Dibujar.DrawGameOver()
 
 
 App()

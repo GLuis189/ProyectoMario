@@ -63,4 +63,9 @@ class Draw():
         pyxel.blt(nube.x, nube.y, 0, 108, 139, 46, 21, 12)
 
     def DrawMontana(self, montana: Montana):
-        pyxel.blt(montana.x, montana.y, 0, 139, 48, 62, 16, 12)
+        pyxel.blt(montana.x, montana.y, 0, 0, 181, 75, 45, 12)
+
+    def DrawGameOver(self):
+        pyxel.cls(0)
+        pyxel.text(77, 63, "GAME OVER" , 8)
+        pyxel.text(74, 63, "\n \n Pulsa q \n para cerrar ", 7)

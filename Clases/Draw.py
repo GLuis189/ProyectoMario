@@ -54,8 +54,8 @@ class Draw():
     def DrawMundo(self):
         pyxel.text(100, 4, "WORLD\n 1-1", 7)
 
-    def DrawVidas(self, Vidas):
-        pyxel.text(180, 130, Vidas, 7)
+    def DrawVidas(self, vidas):
+        pyxel.text(180, 130, vidas, 7)
 
     def DrawTime(self, time):
         pyxel.text(150, 4, time, 7)
@@ -76,3 +76,20 @@ class Draw():
         pyxel.cls(0)
         pyxel.text(77, 63, "GAME OVER" , 8)
         pyxel.text(74, 63, "\n \n Pulsa q \n para cerrar ", 7)
+
+
+"""
+    def Ganar(self, x, y):
+
+        self.__y = y
+        self.__x = x
+
+    def Final(self):
+        while self.__Ganar:
+            self.__y -= 1
+            if self.__y == 128:
+                self.__x += 1
+                if self.__x == 848:
+                    self.__Ganar = True
+            break
+"""

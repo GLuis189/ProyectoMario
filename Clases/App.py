@@ -181,7 +181,11 @@ class App():
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                             and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                         self.Mario.colisionarAbajo(item.y)
-
+        # llegar a la meta
+        if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
+                and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
+            self.Mario.Ganar(self.Meta.x, self.Meta.y)
+            self.Mario.Final()
         # colision con el suelo
         for item in self.Suelo:
             # item.update(self.Mario)

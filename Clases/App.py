@@ -14,6 +14,7 @@ from Draw import Draw
 from Nubes import Nube
 from Montanas import Montana
 from meta import Meta
+from bloquemoneda import BloqueRompibleMoneda
 
 class App():
     def __init__(self):
@@ -29,6 +30,7 @@ class App():
         self.Monedas = self.crearMonedas()
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
         self.Enemigos = self.crearEnemigos()
+        self.Bloquesmoneda = self.crearBloquesconmoneda()
         self.Nubes = self.crearNubes()
         self.Montanas = self.crearMontanas()
         self.Meta = Meta(832, 23)
@@ -60,6 +62,9 @@ class App():
     def crearMonedas(self):
         monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(704, 44), Moneda(685, 108)]
         return monedas
+    def crearBloquesconmoneda(self):
+        bloques = [BloqueRompibleMoneda(640, 80)]
+        return bloques
     def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
         poderes = []
         for item in range(len(self.BloquesInterrogacion)):
@@ -144,6 +149,28 @@ class App():
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarAbajo(item.y)
+                    if self.Mario.Supermario or self.Mario.Mario_Fuego:
+                        item.romper()
+                        self.BloquesRompibles.remove(item)
+        for item in self.Bloquesmoneda:
+            # colision por arriba con los bloques rompibles
+            cont = 0
+            if self.Mario.y < item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarArriba(item.y)
+            # colision por abajo con los bloques rompibles
+            elif self.Mario.y > item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarAbajo(item.y)
+                    self.Monedas.append(Moneda(item.x, item.y - 20))
+                    cont += 1
+                    if self.Mario.Supermario or self.Mario.Mario_Fuego:
+
+                        #if cont >= 4:
+                            item.romper()
+                            self.Bloquesmoneda.remove(item)
 
         for item in self.BloquesInterrogacion:
             # colision por arriba con los bloques interrogacion
@@ -184,7 +211,8 @@ class App():
         # llegar a la meta
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
                 and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
-            self.Mario.Ganar(self.Meta.x, self.Meta.y)
+            if self.time % 5 == 0:
+                self.Mario.Ganar(self.Meta.x, self.Meta.y)
             self.Mario.Final()
         # colision con el suelo
         for item in self.Suelo:
@@ -204,6 +232,8 @@ class App():
             for item in self.Suelo:
                 item.update(item.x - 1.4, item.y)
             for item in self.BLoquesIrrompibles:
+                item.update(item.x - 1.4, item.y)
+            for item in self.Bloquesmoneda:
                 item.update(item.x - 1.4, item.y)
             for item in self.Monedas:
                 item.update(item.x - 1.4, item.y)
@@ -247,6 +277,9 @@ class App():
         for item in self.Monedas:
             if Moneda.is_active:
                 self.Dibujar.DrawMoneda(item)
+        for item in self.Bloquesmoneda:
+            if item.activo:
+                self.Dibujar.DrawBLoqueRompible(item)
         for item in self.Poderes:
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)

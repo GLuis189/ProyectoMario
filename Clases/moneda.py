@@ -39,5 +39,7 @@ class Moneda():
     def CogerMoneda(self):
         self.__is_active = False
 
+    def aparecer(self):
+        self.__is_active = True
 
 

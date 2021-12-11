@@ -78,18 +78,3 @@ class Draw():
         pyxel.text(74, 63, "\n \n Pulsa q \n para cerrar ", 7)
 
 
-"""
-    def Ganar(self, x, y):
-
-        self.__y = y
-        self.__x = x
-
-    def Final(self):
-        while self.__Ganar:
-            self.__y -= 1
-            if self.__y == 128:
-                self.__x += 1
-                if self.__x == 848:
-                    self.__Ganar = True
-            break
-"""

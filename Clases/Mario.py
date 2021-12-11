@@ -74,6 +74,7 @@ class Mario():
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
+        self.__Ganar = False
 
 
     def update(self):
@@ -216,6 +217,18 @@ class Mario():
         self.__Vidas -= 1
         #self.__reset()
 
+    def Ganar(self, x, y):
 
+        self.__y = y
+        self.__x = x
+
+    def Final(self):
+        while self.__Ganar:
+            self.__y -= 1
+            if self.__y == 128:
+                self.__x += 1
+                if self.__x == 848:
+                    self.__Ganar = True
+            break
 
 

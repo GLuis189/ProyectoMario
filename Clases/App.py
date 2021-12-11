@@ -13,6 +13,7 @@ from Poderes import Poderes
 from Draw import Draw
 from Nubes import Nube
 from Montanas import Montana
+from meta import Meta
 
 class App():
     def __init__(self):
@@ -30,6 +31,7 @@ class App():
         self.Enemigos = self.crearEnemigos()
         self.Nubes = self.crearNubes()
         self.Montanas = self.crearMontanas()
+        self.Meta = Meta(784, 64),
         self.time = 300
         self.GameOver = False
 
@@ -61,7 +63,7 @@ class App():
     def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
         poderes = []
         for item in range(len(self.BloquesInterrogacion)):
-            if self.BloquesInterrogacion[item].recompensa:
+            if self.BloquesInterrogacion[item].recompensa and not self.BloquesInterrogacion[item].activo:
                 poderes.append(Poderes(self.BloquesInterrogacion[item].x, self.BloquesInterrogacion[item].y - 16, 1 if self.Mario.Supermario else 0))  # esto hace q la seta o el poder aparezca encima
                 for poder in range(len(poderes)):
                     poderes[poder].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
@@ -160,15 +162,25 @@ class App():
 
         for item in self.tuberias:
             # colision por arriba con los tuberias
-            if self.Mario.y < item.y:
+            if (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    self.Mario.colisionarArriba(item.y)
-            # colision por abajo con los tuberias
-            elif self.Mario.y > item.y:
+                    self.Mario.colisionarIzq(item.x)
+            elif (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    self.Mario.colisionarAbajo(item.y)
+                    self.Mario.colisionarDrch(item.x + item.w)
+
+            else:
+                if self.Mario.y < item.y:
+                    if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                            and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                        self.Mario.colisionarArriba(item.y)
+                # colision por abajo con los bloques irrompibles
+                elif self.Mario.y > item.y:
+                    if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                            and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                        self.Mario.colisionarAbajo(item.y)
 
         # colision con el suelo
         for item in self.Suelo:
@@ -233,7 +245,7 @@ class App():
         for item in self.Poderes:
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)
-
+        self.Dibujar.DrawMeta(self.Meta)
         self.Dibujar.DrawMario(self.Mario)
 
         s = "MARIO\n{:>0000006}".format(self.Mario.score)

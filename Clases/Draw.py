@@ -8,6 +8,7 @@ from Poderes import Poderes
 from moneda import Moneda
 from Nubes import Nube
 from Montanas import Montana
+from meta import Meta
 import pyxel
 
 
@@ -64,6 +65,9 @@ class Draw():
 
     def DrawMontana(self, montana: Montana):
         pyxel.blt(montana.x, montana.y, 0, 0, 181, 75, 45, 12)
+
+    def DrawMeta(self, meta: Meta):
+        pyxel.blt(meta.x, meta.y, 0, 232, 56, meta.w, meta.h, 12)
 
     def DrawGameOver(self):
         pyxel.cls(0)

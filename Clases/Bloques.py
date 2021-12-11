@@ -1,4 +1,4 @@
-import pyxel
+
 
 class Bloque():
     def __init__(self, x, y):

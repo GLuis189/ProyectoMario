@@ -21,6 +21,7 @@ class App():
         self.KoopaTropas = self.crearKoopaTropa()
 
 
+
         pyxel.run(self.update, self.draw)
 
     def __crear_suelo(self, num_suelo):  # Se crea una lista llenas de los bloques q conforman el suelo
@@ -158,6 +159,7 @@ class App():
                 item.update(item.x - 1.4, item.y)
             for item in self.BLoquesIrrompibles:
                 item.update(item.x - 1.4, item.y)
+            for item in
 
 
 

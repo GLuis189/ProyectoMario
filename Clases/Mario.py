@@ -26,6 +26,10 @@ class Mario():
         return self.__h
 
     @property
+    def vx(self):
+        return self.__vx
+
+    @property
     def q1(self):
         return self.__q1
 
@@ -49,6 +53,10 @@ class Mario():
     def Reset(self):
         return self.__reset()
 
+    @property
+    def Mario_Fuego(self):
+        return self.__Mario_Fuego
+
     def __reset(self):
         self.__x = 20
         self.__y = 64
@@ -66,6 +74,7 @@ class Mario():
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
+
 
     def update(self):
         # Hay que hacer lo del visor para que a la izq se pare
@@ -91,19 +100,26 @@ class Mario():
                 if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                     self.__q1 = 18
                     self.__q2 = 98
+
                 if self.__vx > 0 and self.Supermario:
                     self.__q1 = 88
                     self.__q2 = 82
+
                 if self.__vx > 0 and self.__Mario_Fuego:
                     self.__q1 = 39
                     self.__q2 = 135
+
             else:
                 if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                     self.__q1 = 0
                     self.__q2 = 98
+
                 if self.__vx > 0 and self.Supermario:
                     self.__q1 = 105
                     self.__q2 = 82
+                if self.__vx > 0 and self.__Mario_Fuego:
+                    self.__q1 = 122
+                    self.__q2 = 195
 
 
 
@@ -120,22 +136,28 @@ class Mario():
                 if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                     self.__q1 = 18
                     self.__q2 = 98
+
                 if self.__vx > 0 and self.Supermario:
                     self.__q1 = 88
                     self.__q2 = 82
+
                 if self.__vx > 0 and self.__Mario_Fuego:
                     self.__q1 = 39
                     self.__q2 = 135
+
             else:
                 if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                     self.__q1 = 0
                     self.__q2 = 98
+
                 if self.__vx > 0 and self.Supermario:
-                    self.__q1 = 105
+                    self.__q1 = 106
                     self.__q2 = 82
+
                 if self.__vx > 0 and self.__Mario_Fuego:
-                    self.__q1 = 39
-                    self.__q2 = 135
+                    self.__q1 = 122
+                    self.__q2 = 195
+
         else:
             self.__vx = 0
         # Al pulsar el espacio el mario salta
@@ -147,12 +169,15 @@ class Mario():
             if self.__vy > 0 and not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:
                 self.__q1 = 2
                 self.__q2 = 80
+
             if self.__vy > 0 and self.Supermario:
                 self.__q1 = 146
                 self.__q2 = 80
+
             if self.__vy > 0 and self.__Mario_Fuego:
                 self.__q1 = 67
                 self.__q2 = 136
+
         if self.__y > 144:
             self.Morir()
             self.__reset()

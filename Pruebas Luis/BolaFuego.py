@@ -24,12 +24,7 @@ class BolaFuego():
                 self.__is_activo = True
 
 
-
-
-
-
     def rebotar(self, x, y):
-        is self.__is_activo:
+        if self.__is_activo:
             self.__x = max(0, self.__x + 3) * -1 ** self.__direc
             self.__y = max(0, self.__y + 1)
-            if (self.__x + abs(self.__w)) >= x and self.

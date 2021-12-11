@@ -48,21 +48,27 @@ class App():
                 bloques.append(Bloque(16 * i, 144 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
     def crearBloquesIrrompibles(self):
+        #Crea los Bloques irrompibles
         bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(688, 64), BloqueIrrompible(704, 64)]
         return bloques
     def crearTuberias(self):
+        # Crea las tuberías del nivel
         bloques = [Tuberia(432, 112), Tuberia(544, 82)]
         return bloques
     def crearBloquesRompibles(self):
-        bloques = [BloqueRompible(112, 64), BloqueRompible(128, 64), BloqueRompible(352, 80), BloqueRompible(368, 80), BloqueRompible(384, 80), BloqueRompible(352, 26), BloqueRompible(624, 80), BloqueRompible(640, 80)]
+        # Crea los bloques rimpibles del nivel
+        bloques = [ BloqueRompible(128, 64), BloqueRompible(352, 80), BloqueRompible(368, 80), BloqueRompible(384, 80), BloqueRompible(352, 26), BloqueRompible(624, 80), BloqueRompible(640, 80)]
         return bloques
     def crearInterrogacion(self):
+        # Crea los bloques de interrogación prefedinidos
         bloques = [BloqueInterrogacion(166, 64), BloqueInterrogacion(368, 26)]
         return bloques
     def crearMonedas(self):
+        # Crea las monedas predefinidas
         monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(704, 44), Moneda(685, 108)]
         return monedas
     def crearBloquesconmoneda(self):
+        # Crea lso bloques con monedas dentro
         bloques = [BloqueRompibleMoneda(640, 80)]
         return bloques
     def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
@@ -197,7 +203,6 @@ class App():
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarDrch(item.x + item.w)
-
             else:
                 if self.Mario.y < item.y:
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -208,21 +213,23 @@ class App():
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                             and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                         self.Mario.colisionarAbajo(item.y)
+
         # llegar a la meta
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
                 and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
             if self.time % 5 == 0:
                 self.Mario.Ganar(self.Meta.x, self.Meta.y)
             self.Mario.Final()
+
         # colision con el suelo
         for item in self.Suelo:
-            # item.update(self.Mario)
             if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                     and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
 
                 self.Mario.colisionarArriba(item.y)
 
-        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
+        # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
+        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
             for item in self.BloquesRompibles:
                 item.update(item.x - 1.4, item.y)
             for item in self.BloquesInterrogacion:
@@ -259,7 +266,7 @@ class App():
     def draw(self):
         pyxel.cls(6)
 
-        #  Hay que dibujar los bloques y así se dibujan ya q estan dentro de una lista
+        # Llamamos a las funciones de dibujar dentro de la clase Draw.
         for item in self.Nubes:
             self.Dibujar.DrawNube(item)
         for item in self.Montanas:
@@ -283,6 +290,7 @@ class App():
         for item in self.Poderes:
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)
+
         self.Dibujar.DrawMeta(self.Meta)
         self.Dibujar.DrawMario(self.Mario)
         v = "X {}".format(self.Mario.Vidas)

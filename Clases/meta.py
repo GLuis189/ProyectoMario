@@ -3,7 +3,7 @@ class Meta():
         self.__x = x
         self.__y = y
         self.__w = 16
-        self.__h = 170
+        self.__h = 105
 
     @property
     def x(self):
@@ -20,3 +20,6 @@ class Meta():
     @property
     def h(self):
         return self.__h
+
+    def update(self):
+        self.__x -= 1.4

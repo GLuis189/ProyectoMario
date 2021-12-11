@@ -45,6 +45,10 @@ class Mario():
     def Vidas(self):
         return self.__Vidas
 
+    @property
+    def Reset(self):
+        return self.__reset()
+
     def __reset(self):
         self.__x = 20
         self.__y = 64
@@ -149,6 +153,9 @@ class Mario():
             if self.__vy > 0 and self.__Mario_Fuego:
                 self.__q1 = 67
                 self.__q2 = 136
+        if self.__y > 144:
+            self.Morir()
+            self.__reset()
 
         self.__vy = 1
         self.__y += self.__vy
@@ -180,7 +187,9 @@ class Mario():
     def activarBloqueI(self, x):
         self.colisionarAbajo(x)
 
-
+    def Morir(self):
+        self.__Vidas -= 1
+        #self.__reset()
 
 
 

@@ -19,7 +19,7 @@ class App():
     def __init__(self):
         pyxel.init(192, 144, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
-        self.Suelo = self.__crear_suelo(56)  # Con esta función creas el suelo
+        self.Suelo = self.__crear_suelo(64)  # Con esta función creas el suelo
         self.tuberias = self.crearTuberias()
         self.BloquesRompibles = self.crearBloquesRompibles()
         self.BloquesInterrogacion = self.crearInterrogacion()
@@ -31,7 +31,7 @@ class App():
         self.Enemigos = self.crearEnemigos()
         self.Nubes = self.crearNubes()
         self.Montanas = self.crearMontanas()
-        self.Meta = Meta(784, 64),
+        self.Meta = Meta(832, 23)
         self.time = 300
         self.GameOver = False
 
@@ -190,7 +190,7 @@ class App():
 
                 self.Mario.colisionarArriba(item.y)
 
-        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
+        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):  # esto es pues que el fondo solo avance si el mario esta en la mitad de la pantalla
             for item in self.BloquesRompibles:
                 item.update(item.x - 1.4, item.y)
             for item in self.BloquesInterrogacion:
@@ -209,6 +209,7 @@ class App():
                 item.update(item.x - 1.4, item.y)
             for item in self.Montanas:
                 item.update(item.x - 1.4, item.y)
+            self.Meta.update()
 
         # El tiempo se va reduciedo cada vez que pasa 1 segundo (fps%60=0) y si el tiempo se acaba se pierde.
         if self.time > 0:
@@ -247,7 +248,8 @@ class App():
                 self.Dibujar.DrawPoderes(item)
         self.Dibujar.DrawMeta(self.Meta)
         self.Dibujar.DrawMario(self.Mario)
-
+        v = "X {}".format(self.Mario.Vidas)
+        self.Dibujar.DrawVidas(v)
         s = "MARIO\n{:>0000006}".format(self.Mario.score)
         self.Dibujar.DrawScore(s)
         m = "X {:>02}".format(self.Mario.monedas)

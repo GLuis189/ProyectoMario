@@ -54,6 +54,9 @@ class Draw():
     def DrawMundo(self):
         pyxel.text(100, 4, "WORLD\n 1-1", 7)
 
+    def DrawVidas(self, Vidas):
+        pyxel.text(180, 130, Vidas, 7)
+
     def DrawTime(self, time):
         pyxel.text(150, 4, time, 7)
 
@@ -67,8 +70,8 @@ class Draw():
         pyxel.blt(montana.x, montana.y, 0, 0, 181, 75, 45, 12)
 
     def DrawMeta(self, meta: Meta):
-        pyxel.blt(meta.x, meta.y, 0, 232, 56, meta.w, meta.h, 12)
-
+        pyxel.blt(meta.x, meta.y, 0, 233, 121, meta.w, meta.h, 12)
+        pyxel.blt(meta.x + 16, meta.y + 14, 0, 155, 134, 74, 92, 12)
     def DrawGameOver(self):
         pyxel.cls(0)
         pyxel.text(77, 63, "GAME OVER" , 8)

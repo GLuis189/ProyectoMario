@@ -81,19 +81,27 @@ class Mario():
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
             self.__vx = 1
-            if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
-                self.__q1 = 18
-                self.__q2 = 98
-            if self.__vx > 0 and self.Supermario:
-                self.__q1 = 88
-                self.__q2 = 82
-            if self.__vx > 0 and self.__Mario_Fuego:
-                self.__q1 = 39
-                self.__q2 = 135
             if self.__w > 0:
                 self.__w = -self.__w
-        else:
-            self.__vx = 0
+            if pyxel.frame_count % 30 < 15 and not pyxel.btn(pyxel.KEY_SPACE):
+                if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
+                    self.__q1 = 18
+                    self.__q2 = 98
+                if self.__vx > 0 and self.Supermario:
+                    self.__q1 = 88
+                    self.__q2 = 82
+                if self.__vx > 0 and self.__Mario_Fuego:
+                    self.__q1 = 39
+                    self.__q2 = 135
+            else:
+                if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
+                    self.__q1 = 0
+                    self.__q2 = 98
+                if self.__vx > 0 and self.Supermario:
+                    self.__q1 = 105
+                    self.__q2 = 82
+
+
 
 
         # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
@@ -102,20 +110,28 @@ class Mario():
 
             self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
             self.__vx = 1
-            if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
-                self.__q1 = 18
-                self.__q2 = 98
-            if self.__vx > 0 and self.Supermario:
-                self.__q1 = 88
-                self.__q2 = 82
-            if self.__vx > 0 and self.__Mario_Fuego:
-                self.__q1 = 39
-                self.__q2 = 135
             if self.__w < 0:
                 self.__w = -self.__w
-            if self.__vx == 0 and not self.Supermario: #or not self.__Mario_Fuego:
-                self.__q1 = 0
-                self.__q2 = 98
+            if pyxel.frame_count % 30 < 15 and not pyxel.btn(pyxel.KEY_SPACE):
+                if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
+                    self.__q1 = 18
+                    self.__q2 = 98
+                if self.__vx > 0 and self.Supermario:
+                    self.__q1 = 88
+                    self.__q2 = 82
+                if self.__vx > 0 and self.__Mario_Fuego:
+                    self.__q1 = 39
+                    self.__q2 = 135
+            else:
+                if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
+                    self.__q1 = 0
+                    self.__q2 = 98
+                if self.__vx > 0 and self.Supermario:
+                    self.__q1 = 105
+                    self.__q2 = 82
+                if self.__vx > 0 and self.__Mario_Fuego:
+                    self.__q1 = 39
+                    self.__q2 = 135
         else:
             self.__vx = 0
         # Al pulsar el espacio el mario salta

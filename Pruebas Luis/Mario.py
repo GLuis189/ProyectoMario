@@ -37,9 +37,9 @@ class Mario():
         self.__q2 = 98
         self.encimadebloque = False
         self.Supermario = False
-        self.v = 0
+        self.__Vidas = 3
+        self.__Puntos = 0
 
-        self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
 
@@ -73,21 +73,26 @@ class Mario():
 
             self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
             self.__vx = 1
-            if self.__vx > 0 and not self.Supermario:
-                self.__q1 = 18
+            if pyxel.frame_count % 30 < 15 and not pyxel.btn(pyxel.KEY_SPACE):
+                if self.__vx > 0 and not self.Supermario:
+                    self.__q1 = 18
+                    self.__q2 = 98
+            else:
+                self.__q1 = 2
                 self.__q2 = 98
 
-            if self.__vx > 0 and self.Supermario:
-                self.__q1 = 88
-                self.__q2 = 82
-            else:
-                self.__q1 = 18
-                self.__q2 = 98
+                if self.__vx > 0 and self.Supermario:
+                    self.__q1 = 88
+                    self.__q2 = 82
+                else:
+                    self.__q1 = 18
+                    self.__q2 = 98
             if self.__w < 0:
                 self.__w = -self.__w
             if self.__vx == 0 and not self.Supermario:
                 self.__q1 = 0
                 self.__q2 = 98
+
         else:
             self.__vx = 0
         # Al pulsar el espacio el mario salta
@@ -124,6 +129,13 @@ class Mario():
 
     def colisionarDrch(self, x):
         self.__x = x + self.__w
+
+    def perdervida(self):
+        self.__Vidas -= 1
+
+    def matarenemigo(self):
+        self.__Puntos += 100
+        self.__y += 20
 
     def CogerSeta(self):
         self.Supermario = True

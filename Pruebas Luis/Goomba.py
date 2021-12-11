@@ -10,6 +10,7 @@ class Goomba(Enemigo):
         self.__h = 16
         self.__sprite_x = 32
         self.__sprite_y = 0
+        self.__is_alive = True
 
     @property
     def w(self):
@@ -29,7 +30,19 @@ class Goomba(Enemigo):
 
     def update(self, mario: Mario):
         if abs(mario.x - self.x) <= 192:
-            Goomba.mover(self)
+            Goomba.mover(self, mario)
             if pyxel.frame_count % 30 == 0:
                 self.__w = -self.__w
+
+        if (mario.x - self.x) < (mario.y - self.y):
+            if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
+                    and mario.y + mario.h >= self.y and mario.y <= self.y + self.h):
+                mario.perdervida()
+
+        if mario.y > self.y:
+            if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
+                    and mario.y + mario.h >= self.y and mario.y <= self.y + self.h):
+                mario.matarenemigo()
+
+
 

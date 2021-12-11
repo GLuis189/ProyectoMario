@@ -15,7 +15,7 @@ class App():
         self.BloquesRompibles = self.crearBloquesRompibles()
         self.BloquesInterrogacion = self.crearInterrogacion()
         self.Mario = Mario()
-        self.Seta = Poderes(100, 60)
+        self.Seta = Poderes(0, 60)
         self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
         self.Goombas = self.crearGoombas()
         self.KoopaTropas = self.crearKoopaTropa()
@@ -85,7 +85,7 @@ class App():
             elif (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    self.Mario.colisionarDrch(item.x)
+                    self.Mario.colisionarDrch(item.x + item.h)
             else:
                 if self.Mario.y < item.y:
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -142,6 +142,7 @@ class App():
                     and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
 
                 self.Mario.colisionarArriba(item.y)
+
 
         #for item in self.Suelo:
          #   item.update(self.Mario)

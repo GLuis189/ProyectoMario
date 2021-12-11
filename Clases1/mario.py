@@ -51,12 +51,13 @@ class Mario():
 
         self.__Vidas = 3
         self.__is_alive = True
-        self.__Mini_Mario = True
+        self.__Mini_Mario =False
         self.__Super_Mario = False
-        self.__Mario_Fuego = False
+        self.__Mario_Fuego = True
 
         self.__Contador_Monedas = 0
         self.__Puntos = 0
+        self.perdervida = False
 
         self.__sprite_x = 2
         self.__sprite_y = 98
@@ -131,9 +132,12 @@ class Mario():
             self.__Super_Mario = False
             self.__Mario_Fuego = True
 
-    def perder_vida(self):
+    def perdervida(self):
         self.__Vidas -= 1
 
+    def matarenemigo(self):
+        self.__Puntos += 100
+        self.__y += 20
 
     def draw(self):
         if self.__Mini_Mario:

@@ -35,7 +35,7 @@ class App():
 
         self.Monedas = self.__crear_monedas(3)
 
-        self.Poderes = self.__crear_poderes(2)
+        self.Poderes = self.__crear_poderes(1)
 
         self.Nubes = Nube(70, 20)
         self.Montana = Montana(3,3)

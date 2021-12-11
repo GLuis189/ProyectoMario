@@ -41,6 +41,10 @@ class Poderes():
     def is_activo(self):
         return self.__is_active
 
+    @property
+    def tipo(self):
+        return self.__tipo
+
     def coger(self):
         self.__is_active = False
 

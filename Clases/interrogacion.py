@@ -1,5 +1,5 @@
 from Bloques import Bloque
-
+from Poderes import Poderes
 class BloqueInterrogacion(Bloque):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -43,3 +43,5 @@ class BloqueInterrogacion(Bloque):
     def romper(self):
         self.__activo = False
         self.__recompensa = True
+
+

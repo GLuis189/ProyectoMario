@@ -43,7 +43,6 @@ class App():
             if cont < 16 or cont > 19:
                 bloques.append(Bloque(16 * i, 144 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
         return bloques
-
     def crearBloquesIrrompibles(self):
         bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(688, 64), BloqueIrrompible(704, 64)]
         return bloques
@@ -63,9 +62,9 @@ class App():
         poderes = []
         for item in range(len(self.BloquesInterrogacion)):
             if self.BloquesInterrogacion[item].recompensa:
-                poderes.append(Poderes(self.BloquesInterrogacion[item].x, self.BloquesInterrogacion[item].y - 16, 0))  # esto hace q la seta o el poder aparezca encima
-                poderes[item].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
-
+                poderes.append(Poderes(self.BloquesInterrogacion[item].x, self.BloquesInterrogacion[item].y - 16, 1 if self.Mario.Supermario else 0))  # esto hace q la seta o el poder aparezca encima
+                for poder in range(len(poderes)):
+                    poderes[poder].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
         return poderes
     def crearEnemigos(self):
         enemigos = []
@@ -74,7 +73,7 @@ class App():
         nubes = [Nube(10, 32), Nube(180, 16), Nube(290, 32), Nube(420, 26), Nube(560, 16), Nube(710, 16)]
         return nubes
     def crearMontanas(self):
-        montana = [Montana(0,83), Montana(440,83), Montana(628,83)]
+        montana = [Montana(0, 83), Montana(440, 83), Montana(628, 83)]
         return montana
 
 #Luego crearemos update y draw
@@ -87,7 +86,10 @@ class App():
             if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                     and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                 self.Poderes.remove(item)
-                self.Mario.CogerPoder()
+                if item.tipo == 0:
+                    self.Mario.CogerSeta()
+                elif item.tipo == 1:
+                    self.Mario.CogerFLor()
         #coger moneda
         for item in self.Monedas:
             if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -154,7 +156,7 @@ class App():
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarAbajo(item.y)
                     item.romper()
-
+                    self.Poderes = self.crearPoderes()
 
         for item in self.tuberias:
             # colision por arriba con los tuberias

@@ -71,15 +71,25 @@ class Mario():
             self.__h = 32
             self.__q1 = 54
             self.__q2 = 82
+        if self.__Mario_Fuego == True:
+            self.Supermario = False
+            self.__w = 16
+            self.__h = 32
+            self.__q1 = 169
+            self.__q2 = 81
+
         if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
             self.__x = max(0, self.__x - 2)
             self.__vx = 1
-            if self.__vx > 0 and not self.Supermario:
+            if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                 self.__q1 = 18
                 self.__q2 = 98
-            elif self.__vx > 0 and self.Supermario:
+            if self.__vx > 0 and self.Supermario:
                 self.__q1 = 88
                 self.__q2 = 82
+            if self.__vx > 0 and self.__Mario_Fuego:
+                self.__q1 = 39
+                self.__q2 = 135
             if self.__w > 0:
                 self.__w = -self.__w
         else:
@@ -92,19 +102,18 @@ class Mario():
 
             self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
             self.__vx = 1
-            if self.__vx > 0 and not self.Supermario:
+            if self.__vx > 0 and not self.Supermario or not self.__Mario_Fuego:
                 self.__q1 = 18
                 self.__q2 = 98
-
             if self.__vx > 0 and self.Supermario:
                 self.__q1 = 88
                 self.__q2 = 82
-            else:
-                self.__q1 = 18
-                self.__q2 = 98
+            if self.__vx > 0 and self.__Mario_Fuego:
+                self.__q1 = 39
+                self.__q2 = 135
             if self.__w < 0:
                 self.__w = -self.__w
-            if self.__vx == 0 and not self.Supermario:
+            if self.__vx == 0 and not self.Supermario: #or not self.__Mario_Fuego:
                 self.__q1 = 0
                 self.__q2 = 98
         else:
@@ -115,16 +124,15 @@ class Mario():
                 #self.encimadebloque = False
             self.__vy = 1
             self.__y -= self.__vy * 5  # la velocidad a la que salta
-            if self.__vy > 0 and not self.Supermario:
+            if self.__vy > 0 and not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:
                 self.__q1 = 2
                 self.__q2 = 80
-
-            elif self.__vy > 0 and self.Supermario:
+            if self.__vy > 0 and self.Supermario:
                 self.__q1 = 146
                 self.__q2 = 80
-        else:
-            self.__vy = 0
-
+            if self.__vy > 0 and self.__Mario_Fuego:
+                self.__q1 = 67
+                self.__q2 = 136
 
         self.__vy = 1
         self.__y += self.__vy
@@ -144,11 +152,11 @@ class Mario():
     def colisionarDrch(self, x):
         self.__x = x + self.__w
 
-    def CogerPoder(self):
+    def CogerSeta(self):
         self.Supermario = True
 
-    def activarinterrogacion(self):
-        activo = True
+    def CogerFLor(self):
+        self.__Mario_Fuego = True
 
     def cogerMoneda(self):
         self.__monedas += 1

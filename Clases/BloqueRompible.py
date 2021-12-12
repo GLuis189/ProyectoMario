@@ -9,6 +9,7 @@ class BloqueRompible(Bloque):
         self.__w = 16
         self.__h = 16
         self.__activo = True
+        self.__recompensa = False
 
     def romper(self):
         self.__activo = False

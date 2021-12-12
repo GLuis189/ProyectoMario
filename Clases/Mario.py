@@ -55,7 +55,7 @@ class Mario():
 
     def __reset(self):
         self.__x = 20
-        self.__y = 64
+        self.__y = 80
         self.__w = 15
         self.__h = 16
         self.__vy = 1
@@ -181,6 +181,12 @@ class Mario():
         self.__y = x - self.__h
         self.__vy = 0
         self.encimadebloque = True
+
+    def colisionarArribaG(self, x):
+        self.__y = x - self.__h
+        self.__vy = 0
+        self.encimadebloque = True
+        self.__score += 10
 
     def colisionarAbajo(self, x):
         self.__y = x + self.__h

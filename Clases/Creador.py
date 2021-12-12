@@ -59,5 +59,5 @@ class Creador():
         goombas = [Goomba(182, 112), Goomba(416, 112)]
         return goombas
     def crearKoopaTropa(self):
-        koopatropa = [Koopa_Troopa(289, 105)]
+        koopatropa = [Koopa_Troopa(286, 105)]
         return koopatropa

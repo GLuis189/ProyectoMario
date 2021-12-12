@@ -1,9 +1,38 @@
 from Enemigo import Enemigo
 
 class Goomba(Enemigo):
-    def __init__(self, posicion_x, posicion_y):
-        super().__init__(posicion_x, posicion_y)
-        self.Velocidad_X = self.mover()
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.__w = 16
+        self.__h = 16
+        self.__sprite_x = 32
+        self.__sprite_y = 0
+        self.__is_alive = True
 
-    def mover(self):
-        self.Velocidad_X = -2
+    @property
+    def w(self):
+        return self.__w
+
+    @property
+    def h(self):
+        return self.__h
+
+    @property
+    def sprite_x(self):
+        return self.__sprite_x
+
+    @property
+    def sprite_y(self):
+        return self.__sprite_y
+
+'''
+        if (mario.x - self.x) < (mario.y - self.y):
+            if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
+                    and mario.y + mario.h >= self.y and mario.y <= self.y + self.h):
+                mario.perdervida()
+
+        if mario.y > self.y:
+            if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
+                    and mario.y + mario.h >= self.y and mario.y <= self.y + self.h):
+          ºº      mario.matarenemigo()
+                '''

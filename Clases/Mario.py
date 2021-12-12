@@ -26,10 +26,6 @@ class Mario():
         return self.__h
 
     @property
-    def vx(self):
-        return self.__vx
-
-    @property
     def q1(self):
         return self.__q1
 

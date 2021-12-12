@@ -63,7 +63,6 @@ class Mario():
         self.__w = 15
         self.__h = 16
         self.__vy = 1
-        self.__vx = 0
         self.__q1 = 2
         self.__q2 = 98
         self.__score = 0
@@ -160,8 +159,8 @@ class Mario():
             if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
                 #if self.encimadebloque == True:
                     #self.encimadebloque = False
-                self.__vy = 1
-                self.__y -= self.__vy * 5  # la velocidad a la que salta
+                self.__vy = 5
+                self.__y -= self.__vy   # la velocidad a la que salta
                 if not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:
                     self.__q1 = 2
                     self.__q2 = 80
@@ -174,7 +173,7 @@ class Mario():
                     self.__q1 = 67
                     self.__q2 = 136
 
-        if self.__y > 144:
+        if self.__y > 160:
             self.Morir()
             self.__reset()
 
@@ -217,6 +216,7 @@ class Mario():
         self.__y = y
         self.__x = x
         self.__Ganar = True
+
     def Final(self):
         if self.__Ganar:
             self.__y -= 1

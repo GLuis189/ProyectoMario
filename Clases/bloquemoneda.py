@@ -25,6 +25,6 @@ class BloqueRompibleMoneda(Bloque):
     def romper(self):
         self.__activo = False
 
-    def update(self, x, y):
-        self.__x = x
-        self.__y = y
+#    def update(self, x, y):
+ #       self.__x = x
+  #      self.__y = y

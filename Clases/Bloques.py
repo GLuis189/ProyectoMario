@@ -31,9 +31,8 @@ class Bloque():
      #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
 
     def update(self, x, y):
-        if self.__is_activo:
-            self.__x = x
-            self.__y = y
+        self.__x = x
+        self.__y = y
 
 
 

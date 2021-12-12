@@ -1,8 +1,3 @@
-import pyxel
-
-from Mario import Mario
-
-
 class Moneda():
     def __init__(self, x, y):
         self.__x = x

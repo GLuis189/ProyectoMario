@@ -53,6 +53,10 @@ class Mario():
     def Mario_Fuego(self):
         return self.__Mario_Fuego
 
+    @property
+    def ganar(self):
+        return self.__Ganar
+
     def __reset(self):
         self.__x = 20
         self.__y = 80
@@ -200,9 +204,11 @@ class Mario():
     def CogerSeta(self):
         self.Supermario = True
         self.__score += 1000
+
     def CogerFLor(self):
         self.__Mario_Fuego = True
         self.__score += 1000
+
     def cogerMoneda(self):
         self.__monedas += 1
         self.__score += 100
@@ -218,14 +224,10 @@ class Mario():
         self.__y = y
         self.__x = x
         self.__Ganar = True
+        self.__score += 500
 
     def Final(self):
-        if self.__Ganar:
-            self.__y -= 1
-            if self.__y == 128:
-                self.__x += 1
-                if self.__x == 848:
-                    pass
-
+        if self.__x != 848:
+            self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
 
 

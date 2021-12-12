@@ -1,8 +1,6 @@
 import pyxel
 from Mario import Mario
 from moneda import Moneda
-from Goomba import Goomba
-#from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
 from meta import Meta
@@ -173,10 +171,9 @@ class App():
                 self.Mario.colisionarArriba(item.y)
         # llegar a la meta
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
-                and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
+                and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h) and not self.Mario.ganar:
             self.Mario.Ganar(self.Meta.x, self.Meta.y)
-            if self.time % 5 == 0:
-                self.Mario.Final()
+            self.Mario.Final()
         for item in self.Goomba:
             if self.Mario.y < item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -209,16 +206,17 @@ class App():
                         self.Mario.Morir()
 
         # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
-        if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
-            for item in self.Lista:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Poderes:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Goomba:
-                item.update(self.Mario)
-            for item in self.Koopa:
-                item.update(self.Mario)
-            self.Meta.update()
+        if not self.Mario.ganar:
+            if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
+                for item in self.Lista:
+                    item.update(item.x - 1.4, item.y)
+                for item in self.Poderes:
+                    item.update(item.x - 1.4, item.y)
+                for item in self.Goomba:
+                    item.update(self.Mario)
+                for item in self.Koopa:
+                    item.update(self.Mario)
+                self.Meta.update()
 
         # El tiempo se va reduciedo cada vez que pasa 1 segundo (fps%60=0) y si el tiempo se acaba se pierde.
         if self.time > 0:
@@ -228,7 +226,7 @@ class App():
             self.GameOver = True
 
         # Si Mario pierde las vidas se pierde.
-        if self.Mario.Vidas <= 0:
+        if self.Mario.Vidas <= 0 or self.Mario.x >= 848:
             self.GameOver = True
 
     def draw(self):

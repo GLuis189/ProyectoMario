@@ -159,7 +159,7 @@ class App():
                 item.update(item.x - 1.4, item.y)
             for item in self.BLoquesIrrompibles:
                 item.update(item.x - 1.4, item.y)
-            for item in
+
 
 
 

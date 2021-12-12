@@ -23,4 +23,3 @@ class Enemigo():
         if mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):
           self.__vx = -1.4
 
-

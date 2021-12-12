@@ -1,6 +1,3 @@
-import pyxel
-
-from Mario import Mario
 from Enemigo import Enemigo
 
 class Goomba(Enemigo):
@@ -28,11 +25,6 @@ class Goomba(Enemigo):
     def sprite_y(self):
         return self.__sprite_y
 
-    def update(self, mario: Mario):
-        if abs(mario.x - self.x) <= 192:
-            Goomba.mover(self, mario)
-            if pyxel.frame_count % 30 == 0:
-                self.__w = -self.__w
 '''
         if (mario.x - self.x) < (mario.y - self.y):
             if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
@@ -42,5 +34,5 @@ class Goomba(Enemigo):
         if mario.y > self.y:
             if (mario.x + abs(mario.w) >= self.x and mario.x <= self.x + self.w
                     and mario.y + mario.h >= self.y and mario.y <= self.y + self.h):
-                mario.matarenemigo()
+          ºº      mario.matarenemigo()
                 '''

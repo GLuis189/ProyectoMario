@@ -2,11 +2,7 @@
 
 class Bloque():
     def __init__(self, x, y):
-        self.__x = x
-        self.__y = y
-        self.__w = 16
-        self.__h = 16
-        self.__is_activo = True
+        self.reset(x, y)
 
 
     @property
@@ -34,8 +30,11 @@ class Bloque():
         self.__x = x
         self.__y = y
 
-
-
-
+    def reset(self, x, y):
+        self.__x = x
+        self.__y = y
+        self.__w = 16
+        self.__h = 16
+        self.__is_activo = True
 
 

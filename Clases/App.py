@@ -1,20 +1,11 @@
 import pyxel
-#import random
-#from Bloques import Bloque
-#from tuberia import Tuberia
-#from interrogacion import BloqueInterrogacion
 from Mario import Mario
-#from BloqueIrrompible import BloqueIrrompible
-#from BloqueRompible import BloqueRompible
 from moneda import Moneda
 #from Goomba import Goomba
 #from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
-#from Nubes import Nube
-#from Montanas import Montana
 from meta import Meta
-#from bloquemoneda import BloqueRompibleMoneda
 from Creador import Creador
 
 class App():
@@ -78,7 +69,7 @@ class App():
                 self.Monedas.remove(item)
                 item.CogerMoneda()
         for item in self.BLoquesIrrompibles:
-            # colision por arriba con los bloques irompibles
+            # colision por arriba con los bloques irompibles,
 
            # if self.Mario.y < item.y:
                 #if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -138,12 +129,10 @@ class App():
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarAbajo(item.y)
                     self.Monedas.append(Moneda(item.x, item.y - 20))
-                    cont += 1
                     if self.Mario.Supermario or self.Mario.Mario_Fuego:
-
-                        #if cont >= 4:
-                            item.romper()
-                            self.Bloquesmoneda.remove(item)
+                        Moneda.aparecer(self.Monedas[item])
+                        item.romper()
+                        self.Bloquesmoneda.remove(item)
 
         for item in self.BloquesInterrogacion:
             # colision por arriba con los bloques interrogacion
@@ -162,14 +151,14 @@ class App():
 
         for item in self.tuberias:
             # colision por arriba con los tuberias
-            if (self.Mario.x - item.x) < (self.Mario.y - item.y):
+            if (self.Mario.x - item.x + item.w) < (self.Mario.y - item.y + item.h):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarIzq(item.x)
             elif (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    self.Mario.colisionarDrch(item.x + item.w)
+                    self.Mario.colisionarDrch(item.x)
             else:
                 if self.Mario.y < item.y:
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -184,9 +173,9 @@ class App():
         # llegar a la meta
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
                 and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
+            self.Mario.Ganar(self.Meta.x, self.Meta.y)
             if self.time % 5 == 0:
-                self.Mario.Ganar(self.Meta.x, self.Meta.y)
-            self.Mario.Final()
+                self.Mario.Final()
 
         # colision con el suelo
         for item in self.Suelo:
@@ -244,9 +233,10 @@ class App():
 
         self.Dibujar.DrawMeta(self.Meta)
         self.Dibujar.DrawMario(self.Mario)
-        v = "X {}".format(self.Mario.Vidas)
+        v = "X {:>}".format(self.Mario.Vidas)
         self.Dibujar.DrawVidas(v)
         s = "MARIO\n{:>0000006}".format(self.Mario.score)
+        self.Dibujar.DrawMiniMario()
         self.Dibujar.DrawScore(s)
         m = "X {:>02}".format(self.Mario.monedas)
         self.Dibujar.DrawMonedas(m)

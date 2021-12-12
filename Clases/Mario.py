@@ -3,8 +3,8 @@ import pyxel
 
 class Mario():
     def __init__(self):
-       self.__reset()
-
+        self.__reset()
+        self.__Vidas = 3
     @property
     def x(self):
         return self.__x
@@ -70,7 +70,6 @@ class Mario():
         self.__monedas = 0
         self.encimadebloque = False
         self.Supermario = False
-        self.__Vidas = 3
         self.__is_alive = True
         self.__Super_Mario = False
         self.__Mario_Fuego = False
@@ -216,15 +215,13 @@ class Mario():
 
     def Morir(self):
         self.__Vidas -= 1
-        #self.__reset()
+
 
     def Ganar(self, x, y):
         self.__y = y
         self.__x = x
-
-    def Final(self):
         self.__Ganar = True
-
+    def Final(self):
         if self.__Ganar:
             self.__y -= 1
             if self.__y == 128:

@@ -57,6 +57,9 @@ class Draw():
     def DrawVidas(self, vidas):
         pyxel.text(180, 130, vidas, 7)
 
+    def DrawMiniMario(self):
+        pyxel.blt(167, 125, 0, 36, 84, 9, 13, 12)
+
     def DrawTime(self, time):
         pyxel.text(150, 4, time, 7)
 
@@ -72,6 +75,7 @@ class Draw():
     def DrawMeta(self, meta: Meta):
         pyxel.blt(meta.x, meta.y, 0, 233, 121, meta.w, meta.h, 12)
         pyxel.blt(meta.x + 16, meta.y + 14, 0, 155, 134, 74, 92, 12)
+
     def DrawGameOver(self):
         pyxel.cls(0)
         pyxel.text(77, 63, "GAME OVER" , 8)

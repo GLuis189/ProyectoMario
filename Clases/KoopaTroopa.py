@@ -1,13 +1,16 @@
-from Clases1.enemigos import Enemigos
+from Enemigo import Enemigo
+import pyxel
+from Mario import Mario
 
-
-class Koopa_Troopa(Enemigos):
+class Koopa_Troopa(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
-        self.__w = 16
-        self.__h = 24
-        self.__sprite_x = 0
-        self.__sprite_y = 24
+
+        self.__w = 15
+        self.__h = 23
+        self.__sprite_x = 32
+        self.__sprite_y = 0
+        self.__is_alive = True
 
     @property
     def w(self):
@@ -24,3 +27,16 @@ class Koopa_Troopa(Enemigos):
     @property
     def sprite_y(self):
         return self.__sprite_y
+
+    @property
+    def is_alive(self):
+        return self.__is_alive
+
+    def morir(self):
+        self.__is_alive = False
+
+    def update(self, mario: Mario):
+        if abs(mario.x - self.x) <= 192:
+            Koopa_Troopa.mover2(self, mario)
+            if pyxel.frame_count % 30 == 0:
+                self.__w = -self.__w

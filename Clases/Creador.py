@@ -8,6 +8,8 @@ from moneda import Moneda
 from Nubes import Nube
 from Montanas import Montana
 from bloquemoneda import BloqueRompibleMoneda
+from Goomba import Goomba
+from KoopaTroopa import Koopa_Troopa
 
 
 class Creador():
@@ -53,3 +55,9 @@ class Creador():
     def crearMontanas(self):
         montana = [Montana(0, 83), Montana(440, 83), Montana(628, 83)]
         return montana
+    def crearGoombas(self):
+        goombas = [Goomba(182, 112), Goomba(416, 112)]
+        return goombas
+    def crearKoopaTropa(self):
+        koopatropa = [Koopa_Troopa(289, 105)]
+        return koopatropa

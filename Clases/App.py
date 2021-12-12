@@ -1,7 +1,7 @@
 import pyxel
 from Mario import Mario
 from moneda import Moneda
-#from Goomba import Goomba
+from Goomba import Goomba
 #from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
@@ -26,6 +26,8 @@ class App():
         self.Bloquesmoneda = self.Crear.crearBloquesconmoneda()
         self.Nubes = self.Crear.crearNubes()
         self.Montanas = self.Crear.crearMontanas()
+        self.Goomba = self.Crear.crearGoombas()
+        self.Koopa = self.Crear.crearKoopaTropa()
         self.Meta = Meta(832, 23)
         self.time = 300
         self.GameOver = False
@@ -34,7 +36,6 @@ class App():
                           + self.Poderes + self.Bloquesmoneda + self.Nubes + self.Montanas)
 
         pyxel.run(self.update, self.draw)
-
 
     def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
         poderes = []
@@ -51,7 +52,10 @@ class App():
     def update(self):
 
         self.Mario.update()
-
+        for item in range(len(self.Goomba)):
+            self.Goomba[item].update(self.Mario)
+        for item in range(len(self.Koopa)):
+            self.Koopa[item].update(self.Mario)
         # coger Poderes
         for item in self.Poderes:
             if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -99,9 +103,6 @@ class App():
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                             and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                         self.Mario.colisionarAbajo(item.y)
-
-
-
         for item in self.BloquesRompibles:
             # colision por arriba con los bloques rompibles
             if self.Mario.y < item.y:
@@ -118,7 +119,6 @@ class App():
                         self.BloquesRompibles.remove(item)
         for item in self.Bloquesmoneda:
             # colision por arriba con los bloques rompibles
-            cont = 0
             if self.Mario.y < item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
@@ -133,14 +133,12 @@ class App():
                         Moneda.aparecer(self.Monedas[item])
                         item.romper()
                         self.Bloquesmoneda.remove(item)
-
         for item in self.BloquesInterrogacion:
             # colision por arriba con los bloques interrogacion
             if self.Mario.y < item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarArriba(item.y)
-
             # colision por abajo con los bloques interrogacion
             elif self.Mario.y > item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -148,10 +146,9 @@ class App():
                     self.Mario.colisionarAbajo(item.y)
                     item.romper()
                     self.Poderes = self.crearPoderes()
-
         for item in self.tuberias:
             # colision por arriba con los tuberias
-            if (self.Mario.x - item.x + item.w) < (self.Mario.y - item.y + item.h):
+            if (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                     self.Mario.colisionarIzq(item.x)
@@ -169,20 +166,47 @@ class App():
                     if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                             and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
                         self.Mario.colisionarAbajo(item.y)
-
+        # colision con el suelo
+        for item in self.Suelo:
+            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                self.Mario.colisionarArriba(item.y)
         # llegar a la meta
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
                 and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h):
             self.Mario.Ganar(self.Meta.x, self.Meta.y)
             if self.time % 5 == 0:
                 self.Mario.Final()
-
-        # colision con el suelo
-        for item in self.Suelo:
-            if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
-                    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-
-                self.Mario.colisionarArriba(item.y)
+        for item in self.Goomba:
+            if self.Mario.y < item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarArribaG(item.y)
+                    for num in range(len(self.Goomba)):
+                        if self.Goomba[num].is_alive:
+                            self.Mario.colisionarArribaG(item.y)
+                        self.Goomba[num].morir()
+            if (self.Mario.x - item.x) < (self.Mario.y - item.y):
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarIzq(item.x)
+                    if pyxel.frame_count % 60 <= 30:
+                        self.Mario.Morir()
+        for item in self.Koopa:
+            if self.Mario.y < item.y:
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarArribaG(item.y)
+                    for num in range(len(self.Koopa)):
+                        if self.Koopa[num].is_alive:
+                            self.Mario.colisionarArribaG(item.y)
+                        self.Koopa[num].morir()
+            if (self.Mario.x - item.x) < (self.Mario.y - item.y):
+                if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
+                        and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
+                    self.Mario.colisionarIzq(item.x)
+                    if pyxel.frame_count % 60 <= 30:
+                        self.Mario.Morir()
 
         # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
         if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
@@ -190,6 +214,10 @@ class App():
                 item.update(item.x - 1.4, item.y)
             for item in self.Poderes:
                 item.update(item.x - 1.4, item.y)
+            for item in self.Goomba:
+                item.update(self.Mario)
+            for item in self.Koopa:
+                item.update(self.Mario)
             self.Meta.update()
 
         # El tiempo se va reduciedo cada vez que pasa 1 segundo (fps%60=0) y si el tiempo se acaba se pierde.
@@ -230,7 +258,18 @@ class App():
         for item in self.Poderes:
             if item.is_activo:
                 self.Dibujar.DrawPoderes(item)
-
+        for item in self.Goomba:
+            for num in range(len(self.Goomba)):
+                if self.Goomba[num].is_alive:
+                    self.Dibujar.DrawGoomba(item)
+                else:
+                    self.Dibujar.DrawGoombaMuerto(item)
+        for item in self.Koopa:
+            for num in range(len(self.Koopa)):
+                if self.Koopa[num].is_alive:
+                    self.Dibujar.DrawKoopa(item)
+                else:
+                    self.Dibujar.DrawCaparazon(item)
         self.Dibujar.DrawMeta(self.Meta)
         self.Dibujar.DrawMario(self.Mario)
         v = "X {:>}".format(self.Mario.Vidas)

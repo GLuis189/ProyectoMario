@@ -9,6 +9,8 @@ from moneda import Moneda
 from Nubes import Nube
 from Montanas import Montana
 from meta import Meta
+from Goomba import Goomba
+from KoopaTroopa import Koopa_Troopa
 import pyxel
 
 
@@ -75,6 +77,18 @@ class Draw():
     def DrawMeta(self, meta: Meta):
         pyxel.blt(meta.x, meta.y, 0, 233, 121, meta.w, meta.h, 12)
         pyxel.blt(meta.x + 16, meta.y + 14, 0, 155, 134, 74, 92, 12)
+
+    def DrawGoomba(self, goomba: Goomba):
+        pyxel.blt(goomba.x, goomba.y, 1, 0, 0, goomba.w, goomba.h, 12)
+
+    def DrawGoombaMuerto(self, goomba: Goomba):
+        pyxel.blt(goomba.x, goomba.y + 7, 1, 0, 23, goomba.w, goomba.h, 12)
+
+    def DrawKoopa(self, koopa: Koopa_Troopa):
+        pyxel.blt(koopa.x, koopa.y, 1, 0, 40, koopa.w, koopa.h, 12)
+
+    def DrawCaparazon(self, koopa: Koopa_Troopa):
+        pyxel.blt(koopa.x, koopa.y + 8, 1, 0, 64, 15, 15, 12)
 
     def DrawGameOver(self):
         pyxel.cls(0)

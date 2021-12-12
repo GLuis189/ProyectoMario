@@ -9,7 +9,7 @@ class BloqueInterrogacion(Bloque):
         self.__h = 16
         self.__activo = True
         self.__recompensa = False
-        Poder = 0
+
 
     @property
     def x(self):

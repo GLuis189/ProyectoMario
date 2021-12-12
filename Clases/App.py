@@ -1,76 +1,50 @@
 import pyxel
 #import random
-from Bloques import Bloque
-from tuberia import Tuberia
-from interrogacion import BloqueInterrogacion
+#from Bloques import Bloque
+#from tuberia import Tuberia
+#from interrogacion import BloqueInterrogacion
 from Mario import Mario
-from BloqueIrrompible import BloqueIrrompible
-from BloqueRompible import BloqueRompible
+#from BloqueIrrompible import BloqueIrrompible
+#from BloqueRompible import BloqueRompible
 from moneda import Moneda
 #from Goomba import Goomba
 #from KoopaTroopa import KoopaTroopa
 from Poderes import Poderes
 from Draw import Draw
-from Nubes import Nube
-from Montanas import Montana
+#from Nubes import Nube
+#from Montanas import Montana
 from meta import Meta
-from bloquemoneda import BloqueRompibleMoneda
+#from bloquemoneda import BloqueRompibleMoneda
+from Creador import Creador
 
 class App():
     def __init__(self):
         pyxel.init(192, 144, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)
         pyxel.load("mario_assets.pyxres")
-        self.Suelo = self.__crear_suelo(64)  # Con esta función creas el suelo
-        self.tuberias = self.crearTuberias()
-        self.BloquesRompibles = self.crearBloquesRompibles()
-        self.BloquesInterrogacion = self.crearInterrogacion()
+        self.Crear = Creador()
+        self.Suelo = self.Crear.crear_suelo(64)  # Con esta función creas el suelo
+        self.tuberias = self.Crear.crearTuberias()
+        self.BloquesRompibles = self.Crear.crearBloquesRompibles()
+        self.BloquesInterrogacion = self.Crear.crearInterrogacion()
         self.Mario = Mario()
         self.Dibujar = Draw()
         self.Poderes = self.crearPoderes()
-        self.Monedas = self.crearMonedas()
-        self.BLoquesIrrompibles = self.crearBloquesIrrompibles()
-        self.Enemigos = self.crearEnemigos()
-        self.Bloquesmoneda = self.crearBloquesconmoneda()
-        self.Nubes = self.crearNubes()
-        self.Montanas = self.crearMontanas()
+        self.Monedas = self.Crear.crearMonedas()
+        self.BLoquesIrrompibles = self.Crear.crearBloquesIrrompibles()
+        self.Enemigos = self.Crear.crearEnemigos()
+        self.Bloquesmoneda = self.Crear.crearBloquesconmoneda()
+        self.Nubes = self.Crear.crearNubes()
+        self.Montanas = self.Crear.crearMontanas()
         self.Meta = Meta(832, 23)
         self.time = 300
         self.GameOver = False
+        self.Lista = list(self.Suelo + self.tuberias + self.BloquesRompibles
+                          + self.BloquesInterrogacion + self.Monedas + self.BLoquesIrrompibles + self.Enemigos
+                          + self.Poderes + self.Bloquesmoneda + self.Nubes + self.Montanas)
 
         pyxel.run(self.update, self.draw)
 
-    def __crear_suelo(self, num_suelo):  # Se crea una lista llenas de los bloques q conforman el suelo
-        bloques = []
-        cont = 0
-        for i in range(num_suelo):
-            cont += 1
-            if cont < 16 or cont > 19:
-                bloques.append(Bloque(16 * i, 144 - 16))  # Con 16 * i, 128 - 16 consigues que se creen los bloques uno al lado del otro
-        return bloques
-    def crearBloquesIrrompibles(self):
-        #Crea los Bloques irrompibles
-        bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(688, 64), BloqueIrrompible(704, 64)]
-        return bloques
-    def crearTuberias(self):
-        # Crea las tuberías del nivel
-        bloques = [Tuberia(432, 112), Tuberia(544, 82)]
-        return bloques
-    def crearBloquesRompibles(self):
-        # Crea los bloques rimpibles del nivel
-        bloques = [ BloqueRompible(128, 64), BloqueRompible(352, 80), BloqueRompible(368, 80), BloqueRompible(384, 80), BloqueRompible(352, 26), BloqueRompible(624, 80), BloqueRompible(640, 80)]
-        return bloques
-    def crearInterrogacion(self):
-        # Crea los bloques de interrogación prefedinidos
-        bloques = [BloqueInterrogacion(166, 64), BloqueInterrogacion(368, 26)]
-        return bloques
-    def crearMonedas(self):
-        # Crea las monedas predefinidas
-        monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(704, 44), Moneda(685, 108)]
-        return monedas
-    def crearBloquesconmoneda(self):
-        # Crea lso bloques con monedas dentro
-        bloques = [BloqueRompibleMoneda(640, 80)]
-        return bloques
+
     def crearPoderes(self):  # con esto se crean los poderes como la seta o la flor
         poderes = []
         for item in range(len(self.BloquesInterrogacion)):
@@ -79,15 +53,8 @@ class App():
                 for poder in range(len(poderes)):
                     poderes[poder].aparecer()  # este metodo de poderes pone en true el self.__is_active para q se pueda dibujar la seta
         return poderes
-    def crearEnemigos(self):
-        enemigos = []
-        return enemigos
-    def crearNubes(self):
-        nubes = [Nube(10, 32), Nube(180, 16), Nube(290, 32), Nube(420, 26), Nube(560, 16), Nube(710, 16)]
-        return nubes
-    def crearMontanas(self):
-        montana = [Montana(0, 83), Montana(440, 83), Montana(628, 83)]
-        return montana
+
+
 
 #Luego crearemos update y draw
     def update(self):
@@ -230,25 +197,9 @@ class App():
 
         # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
         if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
-            for item in self.BloquesRompibles:
-                item.update(item.x - 1.4, item.y)
-            for item in self.BloquesInterrogacion:
-                item.update(item.x - 1.4, item.y)
-            for item in self.tuberias:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Suelo:
-                item.update(item.x - 1.4, item.y)
-            for item in self.BLoquesIrrompibles:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Bloquesmoneda:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Monedas:
+            for item in self.Lista:
                 item.update(item.x - 1.4, item.y)
             for item in self.Poderes:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Nubes:
-                item.update(item.x - 1.4, item.y)
-            for item in self.Montanas:
                 item.update(item.x - 1.4, item.y)
             self.Meta.update()
 

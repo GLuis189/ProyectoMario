@@ -73,16 +73,6 @@ class App():
                 item.CogerMoneda()
         for item in self.BLoquesIrrompibles:
             # colision por arriba con los bloques irompibles,
-
-           # if self.Mario.y < item.y:
-                #if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
-                    #    and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    #self.Mario.colisionarArriba(item.y)
-            # colision por abajo con los bloques irrompibles
-            #elif self.Mario.y > item.y:
-                #if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
-                     #   and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
-                    #self.Mario.colisionarAbajo(item.y)
             if (self.Mario.x - item.x) < (self.Mario.y - item.y):
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
                         and self.Mario.y + self.Mario.h >= item.y and self.Mario.y <= item.y + item.h):
@@ -208,7 +198,7 @@ class App():
 
         # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
         if not self.Mario.ganar:
-            if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
+            if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):
                 for item in self.Lista:
                     item.update(item.x - 1.4, item.y)
                 for item in self.Poderes:

@@ -1,5 +1,7 @@
 from Mario import Mario
 import pyxel
+
+
 class Enemigo():
     def __init__(self, x, y):
         self.__x = x

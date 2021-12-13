@@ -89,7 +89,7 @@ class Mario():
             self.__q1 = 169
             self.__q2 = 81
         if not self.__Ganar:
-            if pyxel.btn(pyxel.KEY_A) or pyxel.btn(pyxel.KEY_LEFT):
+            if pyxel.btn(pyxel.KEY_A):
                 self.__x = max(0, self.__x - 2)
                 if self.__w > 0:
                     self.__w = -self.__w
@@ -123,7 +123,7 @@ class Mario():
 
             # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
 
-            if pyxel.btn(pyxel.KEY_D) or pyxel.btn(pyxel.KEY_RIGHT):
+            if pyxel.btn(pyxel.KEY_D):
 
                 self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
 
@@ -156,7 +156,7 @@ class Mario():
                         self.__q2 = 195
 
             # Al pulsar el espacio el mario salta
-            if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
+            if pyxel.btn(pyxel.KEY_SPACE):
                 self.__vy = 5
                 self.__y -= self.__vy   # la velocidad a la que salta
                 if not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:

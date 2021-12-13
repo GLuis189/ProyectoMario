@@ -1,6 +1,6 @@
 
 
-class Bloque():
+class Bloque():  # Esta es la superclase de la que derivan el resto de clases de bloques
     def __init__(self, x, y):
         self.reset(x, y)
 
@@ -20,11 +20,6 @@ class Bloque():
     @property
     def h(self):
         return self.__h
-
-
-    # No tiene mucho sentido este draw asiq si eso lo borramos luego
-    #def draw(self):
-     #   pyxel.blt(self.__x, self.__y, 0, 0, 62, self.__w, self.__h)
 
     def update(self, x, y):
         self.__x = x

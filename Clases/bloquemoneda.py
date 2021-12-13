@@ -1,7 +1,7 @@
 from Bloques import Bloque
 
 
-class BloqueRompibleMoneda(Bloque):
+class BloqueRompibleMoneda(Bloque):  # Esta subclase tiene los atributos de los bloques con moneda
     def __init__(self, x, y):
         super().__init__(x, y)
         self.__x = x

@@ -26,12 +26,12 @@ class Mario():
         return self.__h
 
     @property
-    def q1(self):
-        return self.__q1
+    def spx(self):
+        return self.__sprite_x
 
     @property
-    def q2(self):
-        return self.__q2
+    def spy(self):
+        return self.__sprite_y
 
     @property
     def score(self):
@@ -50,6 +50,10 @@ class Mario():
         return self.__reset()
 
     @property
+    def Supermario(self):
+        return self.__Supermario
+
+    @property
     def Mario_Fuego(self):
         return self.__Mario_Fuego
 
@@ -63,12 +67,12 @@ class Mario():
         self.__w = 15
         self.__h = 16
         self.__vy = 1
-        self.__q1 = 2
-        self.__q2 = 98
+        self.__sprite_x = 2
+        self.__sprite_y = 98
         self.__score = 0
         self.__monedas = 0
-        self.encimadebloque = False
-        self.Supermario = False
+        self.__encimadebloque = False
+        self.__Supermario = False
         self.__is_alive = True
         self.__Mario_Fuego = False
         self.__Ganar = False
@@ -77,51 +81,48 @@ class Mario():
     def update(self):
         # Hay que hacer lo del visor para que a la izq se pare
         # Al pulsar A o <- el mario se mueve a la izq
-        if self.Supermario == True:
+        if self.__Supermario:
             self.__w = 16
             self.__h = 32
-            self.__q1 = 54
-            self.__q2 = 82
-        if self.__Mario_Fuego == True:
-            self.Supermario = False
+            self.__sprite_x = 54
+            self.__sprite_y = 82
+        if self.__Mario_Fuego:
+            self.__Supermario = False
             self.__w = 16
             self.__h = 32
-            self.__q1 = 169
-            self.__q2 = 81
+            self.__sprite_x = 169
+            self.__sprite_y = 81
         if not self.__Ganar:
             if pyxel.btn(pyxel.KEY_A):
                 self.__x = max(0, self.__x - 2)
                 if self.__w > 0:
                     self.__w = -self.__w
                 if pyxel.frame_count % 30 < 15 and not pyxel.btn(pyxel.KEY_SPACE):
-                    if not self.Supermario or not self.__Mario_Fuego:
-                        self.__q1 = 18
-                        self.__q2 = 98
+                    if not self.__Supermario or not self.__Mario_Fuego:
+                        self.__sprite_x = 18
+                        self.__sprite_y = 98
 
-                    if self.Supermario:
-                        self.__q1 = 88
-                        self.__q2 = 82
+                    if self.__Supermario:
+                        self.__sprite_x = 88
+                        self.__sprite_y = 82
 
                     if self.__Mario_Fuego:
-                        self.__q1 = 39
-                        self.__q2 = 135
+                        self.__sprite_x = 39
+                        self.__sprite_y = 135
 
                 else:
-                    if not self.Supermario or not self.__Mario_Fuego:
-                        self.__q1 = 0
-                        self.__q2 = 98
+                    if not self.__Supermario or not self.__Mario_Fuego:
+                        self.__sprite_x = 0
+                        self.__sprite_y = 98
 
-                    if self.Supermario:
-                        self.__q1 = 105
-                        self.__q2 = 82
+                    if self.__Supermario:
+                        self.__sprite_x = 105
+                        self.__sprite_y = 82
                     if self.__Mario_Fuego:
-                        self.__q1 = 122
-                        self.__q2 = 195
+                        self.__sprite_x = 122
+                        self.__sprite_y = 195
 
-
-
-
-            # Al pulsar D o -> el mario se mueve a la derecha hasta la mitad de la pantalla
+            # Al pulsar D el mario se mueve a la derecha hasta la mitad de la pantalla
 
             if pyxel.btn(pyxel.KEY_D):
 
@@ -130,47 +131,38 @@ class Mario():
                 if self.__w < 0:
                     self.__w = -self.__w
                 if pyxel.frame_count % 30 < 15 and not pyxel.btn(pyxel.KEY_SPACE):
-                    if not self.Supermario or not self.__Mario_Fuego:
-                        self.__q1 = 18
-                        self.__q2 = 98
-
-                    if self.Supermario:
-                        self.__q1 = 88
-                        self.__q2 = 82
-
+                    if not self.__Supermario or not self.__Mario_Fuego:
+                        self.__sprite_x = 18
+                        self.__sprite_y = 98
+                    if self.__Supermario:
+                        self.__sprite_x = 88
+                        self.__sprite_y = 82
                     if self.__Mario_Fuego:
-                        self.__q1 = 39
-                        self.__q2 = 135
-
+                        self.__sprite_x = 39
+                        self.__sprite_y = 135
                 else:
-                    if not self.Supermario or not self.__Mario_Fuego:
-                        self.__q1 = 0
-                        self.__q2 = 98
-
-                    if self.Supermario:
-                        self.__q1 = 106
-                        self.__q2 = 82
-
+                    if not self.__Supermario or not self.__Mario_Fuego:
+                        self.__sprite_x = 0
+                        self.__sprite_y = 98
+                    if self.__Supermario:
+                        self.__sprite_x = 106
+                        self.__sprite_y = 82
                     if self.__Mario_Fuego:
-                        self.__q1 = 122
-                        self.__q2 = 195
-
+                        self.__sprite_x = 122
+                        self.__sprite_y = 195
             # Al pulsar el espacio el mario salta
             if pyxel.btn(pyxel.KEY_SPACE):
                 self.__vy = 5
                 self.__y -= self.__vy   # la velocidad a la que salta
-                if not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:
-                    self.__q1 = 2
-                    self.__q2 = 80
-
-                if self.Supermario:
-                    self.__q1 = 146
-                    self.__q2 = 80
-
+                if not self.__Supermario or self.__vy > 0 and not self.__Mario_Fuego:
+                    self.__sprite_x = 2
+                    self.__sprite_y = 80
+                if self.__Supermario:
+                    self.__sprite_x = 146
+                    self.__sprite_y = 80
                 if self.__Mario_Fuego:
-                    self.__q1 = 67
-                    self.__q2 = 136
-
+                    self.__sprite_x = 67
+                    self.__sprite_y = 136
         if self.__y > 160:
             self.Morir()
             self.__reset()
@@ -200,7 +192,7 @@ class Mario():
         self.__x = x + self.__w
 
     def CogerSeta(self):
-        self.Supermario = True
+        self.__Supermario = True
         self.__score += 1000
 
     def CogerFLor(self):
@@ -218,11 +210,11 @@ class Mario():
         if not self.Supermario and not self.__Mario_Fuego:
             self.__Vidas -= 1
         if self.Supermario and not self.Mario_Fuego:
-            self.Supermario = False
+            self.__Supermario = False
             self.__Mario_Fuego = False
         if self.Mario_Fuego:
             self.__Mario_Fuego = False
-            self.Supermario = True
+            self.__Supermario = True
 
     def Ganar(self, x, y):
         self.__y = y

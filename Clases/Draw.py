@@ -1,7 +1,6 @@
 from Mario import Mario
 from Bloques import Bloque
-from BloqueIrrompible import BloqueIrrompible
-from tuberia import  Tuberia
+from tuberia import Tuberia
 from interrogacion import BloqueInterrogacion
 from BloqueIrrompible import BloqueIrrompible
 from Poderes import Poderes
@@ -19,8 +18,8 @@ class Draw():
         pyxel.blt(Mario.x,
                   Mario.y,
                   0,
-                  Mario.q1,
-                  Mario.q2,
+                  Mario.spx,
+                  Mario.spy,
                   Mario.w,
                   Mario.h,
                   12)

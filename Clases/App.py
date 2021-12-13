@@ -6,6 +6,7 @@ from Draw import Draw
 from meta import Meta
 from Creador import Creador
 
+
 class App():
     def __init__(self):
         pyxel.init(192, 144, caption="Mario Bross", quit_key=pyxel.KEY_Q, fps=60)

@@ -28,6 +28,7 @@ class App():
         self.Koopa = self.Crear.crearKoopaTropa()
         self.Meta = Meta(832, 23)
         self.time = 300
+        self.Final = False
         self.GameOver = False
         self.Lista = list(self.Suelo + self.tuberias + self.BloquesRompibles
                           + self.BloquesInterrogacion + self.Monedas + self.BLoquesIrrompibles + self.Enemigos
@@ -173,7 +174,7 @@ class App():
         if (self.Mario.x + abs(self.Mario.w) >= self.Meta.x and self.Mario.x <= self.Meta.x + self.Meta.w
                 and self.Mario.y + self.Mario.h >= self.Meta.y and self.Mario.y <= self.Meta.y + self.Meta.h) and not self.Mario.ganar:
             self.Mario.Ganar(self.Meta.x, self.Meta.y)
-            self.Mario.Final()
+            self.Final = True
         for item in self.Goomba:
             if self.Mario.y < item.y:
                 if (self.Mario.x + abs(self.Mario.w) >= item.x and self.Mario.x <= item.x + item.w
@@ -283,6 +284,8 @@ class App():
 
         if self.GameOver:
             self.Dibujar.DrawGameOver()
+        if self.Final:
+            self.Dibujar.DrawFinal(self.Mario)
 
 
 App()

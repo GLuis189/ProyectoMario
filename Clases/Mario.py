@@ -157,8 +157,6 @@ class Mario():
 
             # Al pulsar el espacio el mario salta
             if pyxel.btn(pyxel.KEY_SPACE) or pyxel.btn(pyxel.KEY_UP):
-                #if self.encimadebloque == True:
-                    #self.encimadebloque = False
                 self.__vy = 5
                 self.__y -= self.__vy   # la velocidad a la que salta
                 if not self.Supermario or self.__vy > 0 and not self.__Mario_Fuego:
@@ -217,17 +215,19 @@ class Mario():
         self.colisionarAbajo(x)
 
     def Morir(self):
-        self.__Vidas -= 1
-
+        if not self.Supermario and not self.__Mario_Fuego:
+            self.__Vidas -= 1
+        if self.Supermario and not self.Mario_Fuego:
+            self.Supermario = False
+            self.__Mario_Fuego = False
+        if self.Mario_Fuego:
+            self.__Mario_Fuego = False
+            self.Supermario = True
 
     def Ganar(self, x, y):
         self.__y = y
         self.__x = x
         self.__Ganar = True
         self.__score += 500
-
-    def Final(self):
-        if self.__x != 848:
-            self.__x = self.__x if 96 == self.__x - self.__w else min(192 / 2, max(0, self.__x + 2))
 
 

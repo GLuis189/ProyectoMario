@@ -69,6 +69,10 @@ class Creador():
         goombas = [Goomba(182, 112), Goomba(416, 112)]
         return goombas
 
+    def crearEnemigos(self):
+        enemigos = []
+        return enemigos
+
     def crearKoopaTropa(self):  # Se crea una lista llena de los KoopaTroopa del mapa
         # Crea una lista con los KoopaTroopa del mapa
         koopatropa = [Koopa_Troopa(286, 105)]

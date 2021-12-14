@@ -16,17 +16,19 @@ from KoopaTroopa import Koopa_Troopa
 class Creador():
 
     def crear_suelo(self, num_suelo):  # Se crea una lista llena de los bloques q conforman el suelo
+        if not isinstance(num_suelo, int):
+            raise TypeError("num_suelo debe ser un objeto de tipo entero")
         bloques = []
         cont = 0
         for i in range(num_suelo):
             cont += 1
-            if cont < 16 or cont > 19:
+            if cont < 16 or cont > 19 and cont < 46 or cont > 50:
                 bloques.append(Bloque(16 * i, 144 - 16))  # Introduce en la lista un objeto tipo Bloque en esa posicion
         return bloques
 
     def crearBloquesIrrompibles(self):  # Se crea una lista llena de los bloques q conforman los bloques irrompibles
         #Crea los Bloques irrompibles
-        bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(704, 96), BloqueIrrompible(704, 80), BloqueIrrompible(688, 64), BloqueIrrompible(704, 64)]
+        bloques = [BloqueIrrompible(192, 112), BloqueIrrompible(208, 112), BloqueIrrompible(224, 112), BloqueIrrompible(208, 96), BloqueIrrompible(224, 96), BloqueIrrompible(224, 80), BloqueIrrompible(304, 112), BloqueIrrompible(704, 112), BloqueIrrompible(688, 112), BloqueIrrompible(704, 96), BloqueIrrompible(736, 60), BloqueIrrompible(720, 60)]
         return bloques
 
     def crearTuberias(self):  # Se crea una lista llena de los bloques q conforman las tuberias
@@ -46,7 +48,7 @@ class Creador():
 
     def crearMonedas(self):  # Se crea una lista llena de las  monedas del mapa
         # Crea las monedas predefinidas
-        monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(704, 44), Moneda(685, 108)]
+        monedas = [Moneda(148, 64), Moneda(368, 10), Moneda(352, 10), Moneda(384, 60), Moneda(736, 44), Moneda(669, 108)]
         return monedas
 
     def crearBloquesconmoneda(self):  # Se crea una lista llena de los bloques q conforman los bloques con monedas

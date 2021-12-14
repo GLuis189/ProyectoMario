@@ -4,6 +4,10 @@ from Bloques import Bloque
 class BloqueRompibleMoneda(Bloque):  # Esta subclase tiene los atributos de los bloques con moneda
     def __init__(self, x, y):
         super().__init__(x, y)
+        if not isinstance(x, int):
+            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(y, int):
+            raise TypeError("y debe ser un objeto de tipo entero")
         self.__x = x
         self.__y = y
         self.__w = 16
@@ -26,5 +30,6 @@ class BloqueRompibleMoneda(Bloque):  # Esta subclase tiene los atributos de los 
         self.__activo = False
 
 #    def update(self, x, y):
+
  #       self.__x = x
   #      self.__y = y

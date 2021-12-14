@@ -1,5 +1,9 @@
 class Moneda():
     def __init__(self, x, y):
+        if not isinstance(x, int):
+            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(y, int):
+            raise TypeError("y debe ser un objeto de tipo entero")
         self.__x = x
         self.__y = y
         self.__w = 10
@@ -27,6 +31,10 @@ class Moneda():
         return self.__is_active
 
     def update(self, x, y):
+        if not isinstance(x, int):
+            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(y, int):
+            raise TypeError("y debe ser un objeto de tipo entero")
         if self.__is_active:
             self.__x = x
             self.__y = y

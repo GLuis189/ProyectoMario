@@ -4,6 +4,10 @@ import pyxel
 class Goomba(Enemigo):
     def __init__(self, x, y):
         super().__init__(x, y)
+        if not isinstance(x, int):
+            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(y, int):
+            raise TypeError("y debe ser un objeto de tipo entero")
 
         self.__w = 16
         self.__h = 16
@@ -35,6 +39,8 @@ class Goomba(Enemigo):
         self.__is_alive = False
 
     def update(self, mario: Mario):
+        if not isinstance(mario, Mario):
+            raise TypeError("mario debe ser un objeto de tipo Mario")
         if abs(mario.x - self.x) <= 192:
             Goomba.mover1(self, mario)
 

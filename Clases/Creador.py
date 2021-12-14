@@ -22,7 +22,7 @@ class Creador():
         cont = 0
         for i in range(num_suelo):
             cont += 1
-            if cont < 16 or cont > 19 and cont < 46 or cont > 50:
+            if cont < 16 or cont > 19 and cont < 46 or cont > 50: # Con esto se consigue crear una zona son suelo
                 bloques.append(Bloque(16 * i, 144 - 16))  # Introduce en la lista un objeto tipo Bloque en esa posicion
         return bloques
 
@@ -70,10 +70,6 @@ class Creador():
         # Crea una lista con los Goombas del mapa
         goombas = [Goomba(182, 112), Goomba(416, 112)]
         return goombas
-
-    def crearEnemigos(self):
-        enemigos = []
-        return enemigos
 
     def crearKoopaTropa(self):  # Se crea una lista llena de los KoopaTroopa del mapa
         # Crea una lista con los KoopaTroopa del mapa

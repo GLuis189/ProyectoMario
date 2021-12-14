@@ -1,5 +1,3 @@
-
-
 class Bloque():  # Esta es la superclase de la que derivan el resto de clases de bloques
     def __init__(self, x, y):
         if not isinstance(x, int):

@@ -160,4 +160,4 @@ class Draw():
         pyxel.cls(10)
         pyxel.text(77, 63, "YOU WIN" , 8)
         pyxel.text(74, 63, "\n \n Pulsa q \n para cerrar ", 7)
-        pyxel.text(70, 100, "TU PUNTUACION: {}".format(mario.score), 8)
+        pyxel.text(70, 100, "TU PUNTUACIÓN: {}".format(mario.score), 8)

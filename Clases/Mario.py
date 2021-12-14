@@ -194,8 +194,8 @@ class Mario():
         self.__y = x + self.__h
 
     def colisionarIzq(self, x):
-        if not isinstance(x, int):
-            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(x, float):
+            raise TypeError("x debe ser un objeto de tipo float")
 
         self.__x = x - self.__w
 
@@ -234,8 +234,8 @@ class Mario():
             self.__Supermario = True
 
     def Ganar(self, x, y):
-        if not isinstance(x, int):
-            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(x, float):
+            raise TypeError("x debe ser un objeto de tipo flotante")
         if not isinstance(y, int):
             raise TypeError("y debe ser un objeto de tipo entero")
         self.__y = y

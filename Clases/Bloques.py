@@ -3,9 +3,9 @@
 class Bloque():  # Esta es la superclase de la que derivan el resto de clases de bloques
     def __init__(self, x, y):
         if not isinstance(x, int):
-            raise TypeError("x debe ser un objeto de tipo entero")
+            raise TypeError("x debe ser un objeto de tipo int")
         if not isinstance(y, int):
-            raise TypeError("y debe ser un objeto de tipo entero")
+            raise TypeError("y debe ser un objeto de tipo int")
         self.reset(x, y)
 
 
@@ -26,8 +26,8 @@ class Bloque():  # Esta es la superclase de la que derivan el resto de clases de
         return self.__h
 
     def update(self, x, y):
-        if not isinstance(x, int):
-            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(x, float):
+            raise TypeError("x debe ser un objeto de tipo flotante")
         if not isinstance(y, int):
             raise TypeError("y debe ser un objeto de tipo entero")
         self.__x = x

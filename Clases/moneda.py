@@ -31,8 +31,8 @@ class Moneda():
         return self.__is_active
 
     def update(self, x, y):
-        if not isinstance(x, int):
-            raise TypeError("x debe ser un objeto de tipo entero")
+        if not isinstance(x, float):
+            raise TypeError("x debe ser un objeto de tipo flotante")
         if not isinstance(y, int):
             raise TypeError("y debe ser un objeto de tipo entero")
         if self.__is_active:

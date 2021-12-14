@@ -37,6 +37,8 @@ class Goomba(Enemigo):
     def update(self, mario: Mario):
         if abs(mario.x - self.x) <= 192:
             Goomba.mover1(self, mario)
+
+            # Animación del Goomba cambiando de pie al moverse
             if pyxel.frame_count % 30 == 0:
                 self.__w = -self.__w
 

@@ -32,7 +32,7 @@ class App():
         self.Final = False
         self.GameOver = False
         self.Lista = list(self.Suelo + self.tuberias + self.BloquesRompibles
-                          + self.BloquesInterrogacion + self.Monedas + self.BLoquesIrrompibles + self.Enemigos
+                           + self.BloquesInterrogacion + self.Monedas + self.BLoquesIrrompibles + self.Enemigos
                           + self.Poderes + self.Bloquesmoneda + self.Nubes + self.Montanas)
 
         pyxel.run(self.update, self.draw)

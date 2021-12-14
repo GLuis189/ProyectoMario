@@ -24,11 +24,15 @@ class Enemigo():
         self.__vx = 0
 
     def mover1(self, mario: Mario):
+        if not isinstance(mario, object):
+            raise TypeError("mario debe ser un objeto ")
         self.__x = self.__x + (1 * self.__vx)
         if mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):
             self.__vx = -1.2
 
     def mover2(self, mario: Mario):
+        if not isinstance(mario, object):
+            raise TypeError("mario debe ser un objeto ")
         self.__x = self.__x + (1 * self.__vx)
         if mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):
             self.__vx = -1

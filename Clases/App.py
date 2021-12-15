@@ -6,6 +6,8 @@ from Draw import Draw
 from meta import Meta
 from Creador import Creador
 
+# ESTE ARCHIVO EJECUTA EL JUEGO
+
 
 class App():
     def __init__(self):

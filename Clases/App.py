@@ -26,10 +26,11 @@ class App():
         self.Montanas = self.Crear.crearMontanas()
         self.Goomba = self.Crear.crearGoombas()
         self.Koopa = self.Crear.crearKoopaTropa()
-        self.Meta = Meta(832, 23)
+        self.Meta = Meta(832, 23)  # Con esta funcion colocas la meta
         self.time = 300
         self.Final = False
         self.GameOver = False
+        # Esta lista es una lista de todos los bloques y objetos que se mueven en el mapa
         self.Lista = list(self.Suelo + self.tuberias + self.BloquesRompibles
                            + self.BloquesInterrogacion + self.Monedas + self.BLoquesIrrompibles
                           + self.Poderes + self.Bloquesmoneda + self.Nubes + self.Montanas)
@@ -211,7 +212,7 @@ class App():
                     if pyxel.frame_count % 60 <= 30:
                         self.Mario.Morir()
 
-        # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D o ->
+        # esto es para que el fondo solo avance si el mario esta en la mitad de la pantalla y está pulsando D
         if not self.Mario.ganar:
             if self.Mario.x >= (192 / 2) and pyxel.btn(pyxel.KEY_D):
                 for item in self.Lista:
